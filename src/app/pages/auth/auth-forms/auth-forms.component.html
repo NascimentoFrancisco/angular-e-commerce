@@ -1,0 +1,76 @@
+<app-header-not-authenticated></app-header-not-authenticated>
+<main>
+    <form class="card_form" (ngSubmit)="onSubmit()">
+        <div class="header-signup">
+            @if (loginOrChangePassword) {
+                <h4>Olá seja bem vindo!</h4>
+                <span>Edite sua senha abaixo.</span>    
+            } @else {
+                <h4>Olá seja bem vindo!</h4>
+                <span>Realize seu login abaixo.</span>    
+            } 
+        </div>
+        <div class="container-ipunt-form">
+            @if (loginOrChangePassword) {
+                <app-default-input-text
+                    label="Sua nova senha"
+                    type="password"
+                    id="password1"
+                    placeholder="Ex: ADS#132Dev"
+                    [(ngModel)]="changhePasswordFormData.password1"
+                    name="password1"
+                ></app-default-input-text>
+
+                <app-default-input-text
+                    label="Repita sua nova senha"
+                    type="password"
+                    id="password2"
+                    placeholder=""
+                    [(ngModel)]="changhePasswordFormData.password2"
+                    name="password2"
+                ></app-default-input-text>
+            } @else {
+                <app-default-input-text
+                    label="Usuário"
+                    type="text"
+                    id="username"
+                    placeholder="Seu nome de usuário na plataforma"
+                    [(ngModel)]="loginFormData.username"
+                    name="username"
+                ></app-default-input-text>
+
+                <app-default-input-text
+                    label="Sua senha"
+                    type="password"
+                    id="password"
+                    placeholder="Insira sua senha..."
+                    [(ngModel)]="loginFormData.password"
+                    name="password"
+                ></app-default-input-text>
+            }
+        </div>
+        
+        <div class="submit_button">
+            @if (buttonStatus) {
+                <app-default-button
+                    [title]="'Enviar dados'"
+                    [type]="'submit'"
+                    (action)="handleClick()"
+                ></app-default-button>
+            } @else {
+                <app-spinner></app-spinner>
+            }
+        </div>
+        
+ 
+        <div class="links-make-login">
+            @if (loginOrChangePassword) {
+                <h4>Cuidado ao editar sua senha!</h4>
+                <span>Certifique-se de que memorizou sua nova senha!</span>
+            }@else {
+                <h4>Não possui conta?</h4>
+                <a href="#">Clique aqui e crie sua conta agora.</a>
+            }
+        </div>
+    </form>
+</main>

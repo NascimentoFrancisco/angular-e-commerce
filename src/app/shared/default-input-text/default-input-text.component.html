@@ -1,0 +1,12 @@
+
+<div class="form-group">
+    <label *ngIf="label" [for]="id">{{ label }}</label>
+    <input 
+        [id]="id"
+        [type]="type"
+        [placeholder]="placeholder"
+        [(ngModel)]="value"
+        (blur)="onTouched()"
+        (input)="onChange($any($event.target).value)"
+    />
+</div>

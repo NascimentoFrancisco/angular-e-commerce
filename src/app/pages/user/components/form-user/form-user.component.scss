@@ -1,0 +1,104 @@
+main{
+    background-color: #EBEBEB;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+} 
+
+.card_form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 4px;
+    width: 55%;
+    margin-bottom: 30px;
+    margin-top: 25px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.header-signup{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.header-signup{
+    color: #FF8800;
+    gap: 1px;
+}
+
+.container-ipunt-form{
+    width: 90%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-signup{
+    display: flex;
+    flex-direction: column;
+    color: #FF8800;
+}
+
+.input-signup label{
+    margin-bottom: 2px;
+}
+.input-signup input{
+    height: 28px;
+    border: 1px solid #FF8800;
+    outline: #FF8800;
+    border-radius: 4px;
+    color: #757575;
+    margin-bottom: 10px;
+    padding-left: 8px;
+}
+
+.container-ipunt-form-passwords{
+    width: 90%;
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    color: #FF8800;
+    gap: 15px;
+}
+
+.submit_button{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.links-make-login{
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #FF8800;
+}
+
+.links-make-login a{
+    text-decoration: none;
+    color: #FF8800;
+}
+
+.links-make-login span{
+    text-decoration: none;
+    text-align: center;
+    padding: 0 2px 0 2px;
+}
+
+@media (max-width: 768px) {
+    main{
+        justify-content: center;
+    }
+    .card_form{
+        width: 90%;
+    }
+}

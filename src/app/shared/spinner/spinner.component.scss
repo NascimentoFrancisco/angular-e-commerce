@@ -1,0 +1,36 @@
+.container_loader{
+    display: flex;
+    border-radius: 4px;
+    background-color: #FF8800;
+    width: 140px;
+    height: 40px;
+    align-items: center;
+    cursor: pointer;
+}
+.loader {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    display: block;
+    margin:10px auto;
+    position: relative;
+    background: #FFF;
+    box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+    box-sizing: border-box;
+    animation: shadowPulse 2s linear infinite;
+  }
+  
+  @keyframes shadowPulse {
+    33% {
+      background: #FFF;
+      box-shadow: -24px 0 #FF8800, 24px 0 #FFF;
+    }
+    66% {
+      background: #FF8800;
+      box-shadow: -24px 0 #FFF, 24px 0 #FFF;
+    }
+    100% {
+      background: #FFF;
+      box-shadow: -24px 0 #FFF, 24px 0 #FF8800;
+    }
+  }

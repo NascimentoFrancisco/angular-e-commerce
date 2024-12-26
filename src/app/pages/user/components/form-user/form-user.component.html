@@ -1,0 +1,89 @@
+<app-header-not-authenticated></app-header-not-authenticated>
+<main>
+    <form class="card_form" (ngSubmit)="onSubmit()">
+        <div class="header-signup">
+            <h4>Olá seja bem vindo!</h4>
+            @if (!editOrCad) {
+                @if (isSuperuser) {
+                    <span>Realize seu cadastro de vendedor abaixo</span>    
+                } @else {
+                    <span>Realize seu cadastro de cliente abaixo</span>
+                }
+            }@else {
+                @if (isSuperuser) {
+                    <span>Edite seus dados de vendedor abaixo</span>    
+                } @else {
+                    <span>Edite seus dados de cliente abaixo</span>
+                }
+            }
+        </div>
+ 
+        <div class="container-ipunt-form">
+            <app-default-input-text
+                label="Nome"
+                type="text"
+                id="nome"
+                placeholder="Digite seu nome"
+                [(ngModel)]="formData.name"
+                name="name"
+            ></app-default-input-text>
+
+            <app-default-input-text
+                label="Username"
+                type="text"
+                id="username"
+                placeholder="Digite um nome de usuário"
+                [(ngModel)]="formData.username"
+                name="username"
+            ></app-default-input-text>
+
+            <app-default-input-text
+                label="Email"
+                type="email"
+                id="email"
+                placeholder="Digite um email válido"
+                [(ngModel)]="formData.email"
+                name="email"
+            ></app-default-input-text>
+        </div>
+        @if (!editOrCad) {
+            <div class="container-ipunt-form-passwords">
+                <app-default-input-text
+                    label="Sua Senha"
+                    type="password"
+                    id="password1"
+                    placeholder="Ex: 1212@#ED"
+                    [(ngModel)]="formData.password1"
+                    name="password1"
+                ></app-default-input-text>
+                <app-default-input-text
+                    label="Repita sua senha"
+                    type="password"
+                    id="password2"
+                    placeholder="Digite su asenha novamente"
+                    [(ngModel)]="formData.password2"
+                    name="password2"
+                ></app-default-input-text>
+            </div>
+        }
+        
+        <div class="submit_button">
+            <app-default-button
+                [title]="'Salvar dados'"
+                [type]="'submit'"
+                (action)="handleClick()"
+            ></app-default-button>
+        </div>
+        
+ 
+        <div class="links-make-login">
+            @if (editOrCad) {
+                <h4>Cuidado ao editar dados!</h4>
+                <span>Caso edite email ou username, certifique-se que memorizou tais dados</span>
+            }@else {
+                <h4>Já possui conta?</h4>
+                <a href="#">Clique aqui e faça login agora.</a>
+            }
+        </div>
+    </form>
+</main>

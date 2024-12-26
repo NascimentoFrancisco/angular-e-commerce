@@ -1,0 +1,40 @@
+<div id="menu_mobile" #menuMobile>
+    <div class="menu-mobile-logo">
+        <img src="../../../assets/logo_new.png" alt="logo">
+    </div>
+    <a href="#">Crie sua conta</a>
+    <a href="#">Entre</a>
+    <a href="#" id="closedMenu" (click)="closeMenu()">X</a>
+</div>
+<header>
+    <div class="header-container">
+        <div class="header-logo">
+            <img src="../../../assets/logo_new.png" alt="logo">
+        </div>
+
+        <div class="header-input">
+            <input type="text" placeholder="Pesquise por produtos o por categorias">
+            <a href="#">
+                <img src="../../../assets/search.png" alt="search">
+            </a>
+        </div>
+
+        <div class="header-options">
+            @if(isAuthenticated){
+                <a href="#">Minha conta</a>
+                <a (click)="logout()">Sair</a>
+            }@else {
+                <a href="#">Crie sua conta</a>
+                <a (click)="navigateToLogin()">Entre</a>
+            }
+            <button onclick="location.href='./pages/my_cart/index.html'">
+                <img src="../../../assets/cart.png" alt="cart-shopping">
+            </button>
+            <div class="menu-button">
+                <button id="openMenu" (click)="openMenu()">
+                    <img src="../../../assets/menu.png" alt="menu">
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
