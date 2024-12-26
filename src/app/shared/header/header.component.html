@@ -20,8 +20,13 @@
         </div>
 
         <div class="header-options">
-            <a href="#">Crie sua conta</a>
-            <a href="#">Entre</a>
+            @if(isAuthenticated){
+                <a href="#">Minha conta</a>
+                <a (click)="logout()">Sair</a>
+            }@else {
+                <a href="#">Crie sua conta</a>
+                <a (click)="navigateToLogin()">Entre</a>
+            }
             <button onclick="location.href='./pages/my_cart/index.html'">
                 <img src="../../../assets/cart.png" alt="cart-shopping">
             </button>

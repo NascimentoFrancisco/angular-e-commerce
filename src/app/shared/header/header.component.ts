@@ -1,15 +1,61 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AuthService } from '../../services/auth/auth.service';
+import { UserService } from '../../services/user/user.service';
+import { Router } from '@angular/router';
+import { UserResponse } from '../../interfaces/responses/user/userResponse';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit{
   @ViewChild('menuMobile') menuMobile!: ElementRef<HTMLDivElement>;
+  public isAuthenticated = false;
+  public loggedInUser?: UserResponse;
   
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    this.InitializesHeaderInformation();
+  }
+
+  public navigateToLogin(): void {
+    this.router.navigate(["/login"])
+  }
+  
+  private InitializesHeaderInformation(): void {
+    if(this.authService.getInfoAuth("accessToken")){
+      this.isAuthenticated = true;
+    }
+
+    if(this.isAuthenticated){
+      let userId = this.authService.getInfoAuth("userIDKey");
+      this.userService.getUser(userId!).subscribe({
+        next: (response) => {
+          if(response){
+            this.loggedInUser = response;
+          }
+        },
+        error: (err) => {
+          console.log(err);
+        }
+      })
+    }
+  }
+
+  public logout(): void {
+    this.authService.logout();
+  }
+
+  /* Menu Responsiveness */
   public openMenu(): void {
     const menu = this.menuMobile.nativeElement;
     menu.style.display = 'flex';

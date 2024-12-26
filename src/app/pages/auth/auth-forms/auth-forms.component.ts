@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
 import { SpinnerComponent } from "../../../shared/spinner/spinner.component";
 import { SnackbarService } from '../../../services/snackbar/snackbar.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-auth-forms',
@@ -38,6 +39,7 @@ export class AuthFormsComponent {
 
   constructor (
     private authService: AuthService,
+    private router: Router,
     private snackBarService: SnackbarService
   ) {}
 
@@ -70,6 +72,7 @@ export class AuthFormsComponent {
           console.log(response);
           this.buttonStatus = true;
           this.cleanLoginFormData();
+          this.router.navigate(["/"]);
           this.handleSnackBarMesssage("Seja bem vindo!", "success");
           this.authService.setAllInfoAuth(response.access, response.refresh, response.user_id);
         }

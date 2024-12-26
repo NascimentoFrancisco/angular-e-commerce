@@ -48,7 +48,7 @@ export class AuthService {
 
   public logout() {
     this.clearAllInfoAuth();
-    this.router.navigate(['/login']);
+    this.router.navigate(['login']);
   }
 
 }
