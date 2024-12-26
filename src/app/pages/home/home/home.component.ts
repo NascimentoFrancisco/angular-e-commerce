@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { AuthFormsComponent } from "../../auth/auth-forms/auth-forms.component";
+import { HeaderComponent } from "../../../shared/header/header.component";
+import { FooterComponent } from "../../../shared/footer/footer.component";
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [AuthFormsComponent],
+  imports: [HeaderComponent, FooterComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })

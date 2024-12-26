@@ -70,15 +70,16 @@ export class AuthFormsComponent {
           console.log(response);
           this.buttonStatus = true;
           this.cleanLoginFormData();
+          this.handleSnackBarMesssage("Seja bem vindo!", "success");
+          this.authService.setAllInfoAuth(response.access, response.refresh, response.user_id);
         }
       },
       error: (err) => {
-        console.log(err);
         this.buttonStatus = true;
         if(err.status === 401){
-          this.handleErrors(err.error.detail, "error");
+          this.handleSnackBarMesssage(err.error.detail, "error");
         } else {
-          this.handleErrors(err.error.detail, "error");
+          this.handleSnackBarMesssage(err.error.detail, "error");
         }
       }
     })
@@ -94,7 +95,7 @@ export class AuthFormsComponent {
     this.loginFormData.password = "";
   }
 
-  private handleErrors(message: string, type: 'success' | 'error' | 'warning' | 'info'): void{
+  private handleSnackBarMesssage(message: string, type: 'success' | 'error' | 'warning' | 'info'): void{
     this.snackBarService.show(message, type);
   }
 
