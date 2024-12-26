@@ -51,11 +51,15 @@
         </div>
         
         <div class="submit_button">
-            <app-default-button
-                [title]="'Enviar dados'"
-                [type]="'submit'"
-                (action)="handleClick()"
-            ></app-default-button>
+            @if (buttonStatus) {
+                <app-default-button
+                    [title]="'Enviar dados'"
+                    [type]="'submit'"
+                    (action)="handleClick()"
+                ></app-default-button>
+            } @else {
+                <app-spinner></app-spinner>
+            }
         </div>
         
  
