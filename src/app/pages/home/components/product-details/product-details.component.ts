@@ -7,6 +7,9 @@ import { SpinnerPageInfoComponent } from "../../../../shared/spinner-info/spinne
 import { ShortenPipe } from '../../../../utils/pipes/shorten/shorten.pipe';
 import { CurrencyBrPipe } from '../../../../utils/pipes/currencybr/currency-br.pipe';
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
+import { ShoppingCartService } from '../../../../services/shopping_cart/shopping-cart.service';
+import { AuthService } from '../../../../services/auth/auth.service';
+import { ShoppingCartResponse } from '../../../../interfaces/responses/shopping-cart/shoppingCartResponse';
 
 @Component({
   selector: 'app-product-details',
@@ -28,11 +31,15 @@ export class ProductDetailsComponent implements OnInit{
   public product?: ProductsResponse;
   public idProduct?: string;
   public quantityProducts = 1;
+  public isAuthenticated = false;
+  public allShoppingCartByUser: ShoppingCartResponse[] = [];
 
   constructor(
-    private route: ActivatedRoute, 
+    private route: ActivatedRoute,
+    private authService: AuthService,
     private productsService: ProductsService,
     private snackbarService: SnackbarService,
+    private soppingCartService: ShoppingCartService
   ) {}
 
   ngOnInit(): void {
@@ -43,13 +50,17 @@ export class ProductDetailsComponent implements OnInit{
         this.getProductById(this.idProduct);
       }
       
-    })
+    });
+
+    if(this.authService.getInfoAuth("accessToken")){
+      this.isAuthenticated = true;
+    }
   }
   
   public getProductById(id: string){
     this.productsService.getProductById(id).subscribe({
       next: (response) => {
-        console.log(response);
+        //console.log(response);
         if(response){
           this.product = response;
         }
@@ -77,6 +88,35 @@ export class ProductDetailsComponent implements OnInit{
       } else {
         this.quantityProducts--;
       }
+    }
+  }
+
+  public calculateValueShopping(): number{
+    if(this.product){
+      return this.product?.price * this.quantityProducts
+    }
+    return 0;
+  }
+
+  public addCartShopping(){
+    if(this.isAuthenticated){
+      let userId = this.authService.getInfoAuth("userIDKey");
+      let data = { product_id: this.idProduct!, status: true };
+      this.soppingCartService.createCatShopping(data).subscribe(()=>{
+        this.soppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
+          this.soppingCartService.emitCartUpdate(cartItems);
+          this.snackbarService.show("Produto adicionado no carrinho com sucesso!", "success");
+        })
+      })
+    }
+  }
+
+  public getAllShoppingCartsByUser(){
+    if(this.isAuthenticated){
+      let userId = this.authService.getInfoAuth("userIDKey");
+      this.soppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
+        this.soppingCartService.emitCartUpdate(cartItems);
+      })
     }
   }
 

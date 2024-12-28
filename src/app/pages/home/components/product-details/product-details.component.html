@@ -12,7 +12,7 @@
             <div class="product_options">
                 <div class="product_shopping">
                     <h4>{{ product.name }}</h4>
-                    <h4>Por apenas {{ product.price| currencyBr }}</h4>
+                    <h4>Por apenas {{ calculateValueShopping()| currencyBr }}</h4>
                     <h4>Em estoque: {{ product.amount }}</h4>
                     <div class="amount_products_shopping">
                         <h4>Quantidade: {{ quantityProducts }} </h4>
@@ -24,7 +24,7 @@
                         </button>
                     </div>
                     <div class="actions_shopping_products">
-                        <button id="add_cart">Adicionar no carrinho</button>
+                        <button (click)="addCartShopping()" id="add_cart">Adicionar no carrinho</button>
                         <button id="buy_now">Comprar produto</button>
                     </div>
                 </div>

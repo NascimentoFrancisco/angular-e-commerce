@@ -27,9 +27,16 @@
                 <a href="#">Crie sua conta</a>
                 <a (click)="navigateToLogin()">Entre</a>
             }
-            <button onclick="location.href='./pages/my_cart/index.html'">
-                <img src="../../../assets/cart.png" alt="cart-shopping">
-            </button>
+            @if (allShoppingCartByUser.length > 0) {
+                <button onclick="location.href='./pages/my_cart/index.html'" id="cart_button" #cart_button>
+                    <img src="../../../assets/cart.png" alt="cart-shopping">
+                    <div class="value_cart">{{allShoppingCartByUser.length}}</div>
+                </button>
+            } @else {
+                <button onclick="location.href='./pages/my_cart/index.html'">
+                    <img src="../../../assets/cart.png" alt="cart-shopping">
+                </button>
+            }
             <div class="menu-button">
                 <button id="openMenu" (click)="openMenu()">
                     <img src="../../../assets/menu.png" alt="menu">
