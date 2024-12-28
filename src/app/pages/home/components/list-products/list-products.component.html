@@ -8,7 +8,7 @@
                     <div class="products-promotion">
                         
                         @for (product of productsAndCategories.producs; track $index) {
-                            <a>
+                            <a (click)="navigateToDetail(product.id)">
                                 <div class="card-procuct-promotion">
                                     <img src="{{ product.image_url }}" alt="Capacete">
                                     <p>{{ product.name | shorten:40}}</p>

@@ -17,4 +17,10 @@ export class ProductsService {
     );
   }
 
+  public getProductById(idProduct: string): Observable<ProductsResponse>{
+    return this.http.get<ProductsResponse>(
+      `${environment.BASE_URL}/products/${idProduct}/`
+    );
+  }
+
 }

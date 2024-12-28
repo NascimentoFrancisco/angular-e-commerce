@@ -5,7 +5,7 @@ import { CategoriesService } from '../../../services/categories/categories.servi
 import { CategoryResponse } from '../../../interfaces/responses/categories/categoryResponse';
 import { ProductsService } from '../../../services/products/products.service';
 import { ProductsResponse } from '../../../interfaces/responses/products/productsResponse';
-import { ListProductsComponent } from "../list-products/list-products.component";
+import { ListProductsComponent } from '../components/list-products/list-products.component'
 import { SpinnerPageInfoComponent } from "../../../shared/spinner-info/spinner-page-info.component";
 
 @Component({
@@ -17,7 +17,6 @@ import { SpinnerPageInfoComponent } from "../../../shared/spinner-info/spinner-p
 })
 export class HomeComponent implements OnInit{
   public categories?: CategoryResponse[];
-  //public productsByCategories: Array<ProductsResponse[]> = [];
 
   constructor(
     private categoriesService: CategoriesService,
@@ -33,10 +32,6 @@ export class HomeComponent implements OnInit{
       next: (response) => {
         if(response){
           this.categories = response;
-          //console.log(this.categories);
-          /* this.categories.forEach((category) => {
-            this.getProductByCategory(category.slug);
-          }); */
         }
       },
       error: (err) => {
@@ -44,22 +39,5 @@ export class HomeComponent implements OnInit{
       }
     });
   }
-
-  /* public getProductByCategory(category_slug: string){
-    if(this.categories){
-      this.proudctsService.getProduct(category_slug).subscribe({
-        next: (response) => {
-          if(response && response.length > 0){
-            //console.log(response)
-            this.productsByCategories?.push(response);
-            console.log(this.productsByCategories);
-          }
-        },
-        error: (err) => {
-          console.log(err);
-        }
-      })
-    }
-  } */
 
 }
