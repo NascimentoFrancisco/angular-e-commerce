@@ -1,5 +1,11 @@
 <app-header></app-header>
-<main>
-    
-</main>
+
+@if (categories) {
+    <app-list-products
+        [categories]="categories"
+    ></app-list-products>
+} @else {
+    <app-spinner-page-info></app-spinner-page-info>
+}
+
 <app-footer></app-footer>

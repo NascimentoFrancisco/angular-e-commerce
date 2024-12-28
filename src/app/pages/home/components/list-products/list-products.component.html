@@ -1,0 +1,28 @@
+<main>
+    @if (productsByCategories.length > 0) {
+        @for (productsAndCategories of productsByCategories; track $index) {
+            
+            <section class="section-promotion">
+                <div class="promotion-container">
+                    <h4>{{ productsAndCategories.category }}</h4>
+                    <div class="products-promotion">
+                        
+                        @for (product of productsAndCategories.producs; track $index) {
+                            <a (click)="navigateToDetail(product.id)">
+                                <div class="card-procuct-promotion">
+                                    <img src="{{ product.image_url }}" alt="Capacete">
+                                    <p>{{ product.name | shorten:40}}</p>
+                                    <span class="price">{{ product.price | currencyBr }}</span>
+                                </div>
+                            </a>
+                        }
+
+                    </div>
+                </div>
+            </section>
+        }
+        
+    }@else {
+        <app-spinner-page-info></app-spinner-page-info>
+    }
+</main>
