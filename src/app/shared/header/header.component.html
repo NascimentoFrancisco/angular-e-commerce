@@ -28,12 +28,12 @@
                 <a (click)="navigateToLogin()">Entre</a>
             }
             @if (allShoppingCartByUser.length > 0) {
-                <button onclick="location.href='./pages/my_cart/index.html'" id="cart_button" #cart_button>
+                <button id="cart_button" #cart_button>
                     <img src="../../../assets/cart.png" alt="cart-shopping">
                     <div class="value_cart">{{allShoppingCartByUser.length}}</div>
                 </button>
             } @else {
-                <button onclick="location.href='./pages/my_cart/index.html'">
+                <button>
                     <img src="../../../assets/cart.png" alt="cart-shopping">
                 </button>
             }
