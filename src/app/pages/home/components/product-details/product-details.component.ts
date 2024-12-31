@@ -34,7 +34,6 @@ export class ProductDetailsComponent implements OnInit{
   public isAuthenticated = false;
   public allShoppingCartByUser: ShoppingCartResponse[] = [];
   public shoppingCartByUser?: ShoppingCartResponse | null;
-  public shoppingInCart = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -57,7 +56,6 @@ export class ProductDetailsComponent implements OnInit{
               response.forEach((shopp) => {
                 if(shopp.product.id === this.idProduct){
                   this.shoppingCartByUser = shopp;
-                  this.shoppingInCart = true;
                 }
               });
             }
@@ -124,7 +122,11 @@ export class ProductDetailsComponent implements OnInit{
         next: () => {
           this.shoppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
             this.shoppingCartService.emitCartUpdate(cartItems);
-            this.shoppingInCart = true;
+            cartItems.forEach((shopp) => {
+              if(shopp.product.id === this.idProduct){
+                this.shoppingCartByUser = shopp;
+              }
+            });
             this.snackbarService.show("Produto adicionado no carrinho com sucesso!", "success");
           })
         },
@@ -151,7 +153,6 @@ export class ProductDetailsComponent implements OnInit{
           this.shoppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
             this.shoppingCartService.emitCartUpdate(cartItems);
             this.shoppingCartByUser = null;
-            this.shoppingInCart = false;
             this.snackbarService.show("Produto removido do carrinho com sucesso!", "success");
           })
         },
