@@ -1,0 +1,24 @@
+
+<div class="container">
+    <div class="header_body">
+        <div class="info_header">
+            <div class="profile_user">
+                {{ user.name | slice:0:2 | uppercase}}
+            </div>
+            <div class="info_primary">
+                <h4>{{ user.name }}</h4>
+                <span>{{ user.email }}</span>
+            </div>
+        </div>
+        @if (allowsActions) {
+            <div class="actions_header">
+                <button class="edit_profile">
+                    <img src="../../../../assets/user-avatar.png" alt="edit-profile">
+                </button>
+                <button class="delete_profile">
+                    <img src="../../../../assets/delete.png" alt="edit-profile">
+                </button>
+            </div>
+        }
+    </div>
+</div>

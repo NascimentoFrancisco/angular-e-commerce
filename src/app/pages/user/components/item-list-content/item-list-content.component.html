@@ -1,0 +1,35 @@
+
+<div class="shopping_items">
+    <img src="../../../assets/capacete.png" alt="capacete">
+    <div class="info_shopping">
+        <h4>Capcete Moto Tipo Samarino</h4>
+        @if (listCartItems) {
+            <ul>
+                <li>listCartItems</li>
+                <li>
+                    <span>Quantidade: 1</span>
+                    <button class="actions_products_cart">-</button>
+                    <button class="actions_products_cart">+</button>
+                </li>
+                <li>Total: 89,90</li>
+            </ul>
+        } @else if (listPurchases) {
+            <ul>
+                listCartItems
+                <li>Quantidade: 1</li>
+                <li>Total: 89,90</li>
+            </ul>
+        }
+        <h4>Situação: Em aberto</h4>
+    </div>
+    <div class="shopping_actions">
+        @if (listCartItems) {
+            <button class="detail_shopping_cart">Ver detalhes</button>
+            <button class="finish_shopping_cart">Finalizar compra</button>
+            <button class="delete_shopping_cart">Apagar</button>
+        } @else if (listPurchases) {
+            <button class="actions_button">Ver detalhes</button>
+            <button class="actions_button">Repetir compra</button>
+        }
+    </div>
+</div>

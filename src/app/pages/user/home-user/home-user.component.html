@@ -1,1 +1,20 @@
-<p>home-user works!</p>
+<app-header></app-header>
+<main>
+    @if (loggedInUser) {
+        <app-account-container-information
+            [user]="loggedInUser"
+            [allowsActions]="true"
+        ></app-account-container-information>
+    } @else {
+        <app-spinner-page-info></app-spinner-page-info>
+    }
+    <!-- <app-content-listing
+        [title]="'Minhas Compras'"
+    ></app-content-listing> -->
+
+    <app-not-content-container
+        [title]="'Ops! Você não tem nenhuma compra ainda.'"
+        [subtitle]="'Clique aqui e faça a sua primeira compra!'"
+    ></app-not-content-container>
+    
+</main>

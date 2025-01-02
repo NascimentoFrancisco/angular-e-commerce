@@ -101,6 +101,14 @@ export class HeaderComponent implements OnInit{
     this.authService.logout();
   }
 
+  /* Navigate to user pages */
+  public navigateToUserPage(){
+    this.router.navigate(["user"]);
+  }
+  public navigateToShoppingCart(){
+    this.router.navigate(["user"]);
+  }
+
   /* Menu Responsiveness */
   public openMenu(): void {
     const menu = this.menuMobile.nativeElement;

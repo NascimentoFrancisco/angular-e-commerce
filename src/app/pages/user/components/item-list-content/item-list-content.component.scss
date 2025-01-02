@@ -1,0 +1,101 @@
+
+.shopping_items{
+    display: flex;
+    justify-content: space-between;
+    width: 70vw;
+    height: 200px;
+    border: 2px solid #FC9E32;
+    border-radius: 4px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.shopping_items img{
+    width: 20%;
+    height: auto;
+}
+
+.info_shopping{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+.info_shopping ul{
+    margin-top: 8px;
+}
+
+.info_shopping ul li{
+    list-style-type: none;
+    padding-top: 4px;
+}
+
+/* If it is the cart option */
+.actions_products_cart{
+    background-color: transparent;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 28px;
+    padding: 0 10px 0 10px;
+    border: 1px solid #808080 ;
+    border-radius: 4px;
+}
+
+.shopping_actions{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 20px;
+}
+
+.actions_button {
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #FC9E32;
+    color: #ffffff;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+/* If it is the cart option */
+.detail_shopping_cart {
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #FC9E32;
+    color: #ffffff;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.finish_shopping_cart{
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #0b8300;
+    color: #ffffff;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.delete_shopping_cart{
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #fc0000;
+    color: #ffffff;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .shopping_items{
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+    }
+    .shopping_items img {
+        width: 40%;
+        height: auto;
+    }
+    .shopping_actions{
+        margin-top: 12px;
+    }
+}
