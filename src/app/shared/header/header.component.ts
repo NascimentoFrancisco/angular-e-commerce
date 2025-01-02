@@ -12,7 +12,7 @@ import { ShoppingCartResponse } from '../../interfaces/responses/shopping-cart/s
   standalone: true,
   imports: [CommonModule],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit{
   @ViewChild('menuMobile') menuMobile!: ElementRef<HTMLDivElement>;
@@ -101,11 +101,21 @@ export class HeaderComponent implements OnInit{
     this.authService.logout();
   }
 
+  /* Navigate to user pages */
+  public navigateToUserPage(){
+    this.router.navigate(["user"]);
+  }
+  public navigateToShoppingCart(){
+    this.router.navigate(["user/cart"]);
+  }
+
   /* Menu Responsiveness */
   public openMenu(): void {
     const menu = this.menuMobile.nativeElement;
-    const cart_button = this.cart_button.nativeElement;
-    cart_button.style.display = 'none';
+    const cart_button = this.cart_button?.nativeElement;
+    if (cart_button) {
+      cart_button.style.display = 'none';
+    }
     menu.style.display = 'flex';
     menu.style.left = `${menu.offsetWidth * -1}px`;
 
@@ -117,8 +127,10 @@ export class HeaderComponent implements OnInit{
 
   public closeMenu(): void {
     const menu = this.menuMobile.nativeElement;
-    const cart_button = this.cart_button.nativeElement;
-    cart_button.style.display = 'block';
+    const cart_button = this.cart_button?.nativeElement;
+    if (cart_button) {
+      cart_button.style.display = 'block';
+    }
     menu.style.opacity = '0';
     setTimeout(() => {
       menu.style.display = 'none';

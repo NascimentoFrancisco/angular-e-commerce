@@ -33,13 +33,14 @@ export class ProductDetailsComponent implements OnInit{
   public quantityProducts = 1;
   public isAuthenticated = false;
   public allShoppingCartByUser: ShoppingCartResponse[] = [];
+  public shoppingCartByUser?: ShoppingCartResponse | null;
 
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
     private productsService: ProductsService,
     private snackbarService: SnackbarService,
-    private soppingCartService: ShoppingCartService
+    private shoppingCartService: ShoppingCartService
   ) {}
 
   ngOnInit(): void {
@@ -48,6 +49,21 @@ export class ProductDetailsComponent implements OnInit{
       
       if(this.idProduct){
         this.getProductById(this.idProduct);
+        let userId = this.authService.getInfoAuth("userIDKey");
+        this.shoppingCartService.getAllShopingCartUser(userId!).subscribe({
+          next: (response) => {
+            if(response){
+              response.forEach((shopp) => {
+                if(shopp.product.id === this.idProduct){
+                  this.shoppingCartByUser = shopp;
+                }
+              });
+            }
+          },
+          error: (err) => {
+            console.log(err);
+          }
+        })
       }
       
     });
@@ -102,20 +118,65 @@ export class ProductDetailsComponent implements OnInit{
     if(this.isAuthenticated){
       let userId = this.authService.getInfoAuth("userIDKey");
       let data = { product_id: this.idProduct!, status: true };
-      this.soppingCartService.createCatShopping(data).subscribe(()=>{
-        this.soppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
-          this.soppingCartService.emitCartUpdate(cartItems);
-          this.snackbarService.show("Produto adicionado no carrinho com sucesso!", "success");
-        })
+      this.shoppingCartService.createCatShopping(data).subscribe({
+        next: () => {
+          this.shoppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
+            this.shoppingCartService.emitCartUpdate(cartItems);
+            cartItems.forEach((shopp) => {
+              if(shopp.product.id === this.idProduct){
+                this.shoppingCartByUser = shopp;
+              }
+            });
+            this.snackbarService.show("Produto adicionado no carrinho com sucesso!", "success");
+          })
+        },
+        error: (err) => {
+          if(err.status === 400){
+            this.snackbarService.show(
+              err.error["detail"], "error"
+            );
+          } else{
+            this.snackbarService.show(
+              "Erro ao adicionar produto no carrinho!", "error"
+            );
+          }
+        }     
       })
     }
+  }
+
+  public removeCartShopping(){
+    let userId = this.authService.getInfoAuth("userIDKey");
+    if(this.isAuthenticated && this.shoppingCartByUser){
+      this.shoppingCartService.removeCatShopping(this.shoppingCartByUser.id).subscribe({
+        next: () => {
+          this.shoppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
+            this.shoppingCartService.emitCartUpdate(cartItems);
+            this.shoppingCartByUser = null;
+            this.snackbarService.show("Produto removido do carrinho com sucesso!", "success");
+          })
+        },
+        error: (err) => {
+          if(err.status === 400){
+            this.snackbarService.show(
+              err.error["detail"], "error"
+            );
+          } else{
+            this.snackbarService.show(
+              "Erro ao remover produto do carrinho!", "error"
+            );
+          }
+        }
+      })
+    }
+
   }
 
   public getAllShoppingCartsByUser(){
     if(this.isAuthenticated){
       let userId = this.authService.getInfoAuth("userIDKey");
-      this.soppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
-        this.soppingCartService.emitCartUpdate(cartItems);
+      this.shoppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
+        this.shoppingCartService.emitCartUpdate(cartItems);
       })
     }
   }

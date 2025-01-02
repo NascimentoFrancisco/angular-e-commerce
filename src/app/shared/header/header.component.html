@@ -4,12 +4,14 @@
     </div>
     <a href="#">Crie sua conta</a>
     <a href="#">Entre</a>
-    <a href="#" id="closedMenu" (click)="closeMenu()">X</a>
+    <a id="closedMenu" (click)="closeMenu()">X</a>
 </div>
 <header>
     <div class="header-container">
         <div class="header-logo">
-            <img src="../../../assets/logo_new.png" alt="logo">
+            <a href="/">
+                <img src="../../../assets/logo_new.png" alt="logo">
+            </a>
         </div>
 
         <div class="header-input">
@@ -21,19 +23,19 @@
 
         <div class="header-options">
             @if(isAuthenticated){
-                <a href="#">Minha conta</a>
+                <a (click)="navigateToUserPage()">Minha conta</a>
                 <a (click)="logout()">Sair</a>
             }@else {
                 <a href="#">Crie sua conta</a>
                 <a (click)="navigateToLogin()">Entre</a>
             }
             @if (allShoppingCartByUser.length > 0) {
-                <button onclick="location.href='./pages/my_cart/index.html'" id="cart_button" #cart_button>
+                <button id="cart_button" #cart_button (click)="navigateToShoppingCart()">
                     <img src="../../../assets/cart.png" alt="cart-shopping">
                     <div class="value_cart">{{allShoppingCartByUser.length}}</div>
                 </button>
             } @else {
-                <button onclick="location.href='./pages/my_cart/index.html'">
+                <button (click)="navigateToShoppingCart()">
                     <img src="../../../assets/cart.png" alt="cart-shopping">
                 </button>
             }

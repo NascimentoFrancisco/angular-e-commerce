@@ -1,14 +1,15 @@
+
 <app-header></app-header>
 <main>
     @if (loggedInUser) {
         <app-account-container-information
             [user]="loggedInUser"
-            [allowsActions]="true"
+            [allowsActions]="false"
         ></app-account-container-information>
         <app-content-listing
-            [title]="'Minhas Compras'"
+            [title]="'Itens em meu carrinho de Compras'"
             [user]="loggedInUser"
-            [listPurchases]="true"
+            [listCartItems]="true"
         ></app-content-listing>
     } @else {
         <app-spinner-page-info></app-spinner-page-info>

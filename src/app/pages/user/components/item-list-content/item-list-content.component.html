@@ -1,0 +1,39 @@
+
+@if (shopping) {
+    <div class="shopping_items">
+        <img src="{{ shopping.product.image_url }}" alt="capacete">
+        <div class="info_shopping">
+            <h4>{{ shopping.product.name }}</h4>
+                <ul>
+                    <li>Quantidade: {{ shopping.quantity_products }}</li>
+                    <li>Total: 89,90</li>
+                </ul>
+            <h4>Situação: Em aberto</h4>
+        </div>
+        <div class="shopping_actions">
+            <button class="actions_button">Ver detalhes</button>
+            <button class="actions_button">Repetir compra</button>
+        </div>
+    </div>
+} @else if (shoppingCart){
+    <div class="shopping_items">
+        <img src="{{ shoppingCart.product.image_url }}" alt="capacete">
+        <div class="info_shopping">
+            <h4>{{ shoppingCart.product.name }}</h4>
+            <ul>
+                <li>
+                    <span>Quantidade: {{ quantityProducts }}</span>
+                    <button class="actions_products_cart" (click)="decrementQuantity()">-</button>
+                    <button class="actions_products_cart" (click)="incrementQuantity()">+</button>
+                </li>
+                <li>Total: {{ calculateValueShopping()| currencyBr }}</li>
+            </ul>
+            <h4>Situação: Em aberto</h4>
+        </div>
+        <div class="shopping_actions">
+            <button class="finish_shopping_cart">Finalizar compra</button>
+            <button class="delete_shopping_cart">Apagar</button>
+        </div>
+    </div>
+}
+

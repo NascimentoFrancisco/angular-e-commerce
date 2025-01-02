@@ -22,6 +22,10 @@ export class ShoppingCartService {
     );
   }
 
+  public removeCatShopping(cartShoppingId: string){
+    return this.http.delete(`${environment.BASE_URL}/shopping-cart/${cartShoppingId}/`);
+  }
+
   emitCartUpdate(cartItems: ShoppingCartResponse[]): void {
     this.cartUpdated.next(cartItems);
   }

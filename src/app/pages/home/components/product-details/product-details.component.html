@@ -24,7 +24,11 @@
                         </button>
                     </div>
                     <div class="actions_shopping_products">
-                        <button (click)="addCartShopping()" id="add_cart">Adicionar no carrinho</button>
+                        @if (shoppingCartByUser) {
+                            <button (click)="removeCartShopping()" id="remove_cart">Remover do carrinho</button>    
+                        } @else {
+                            <button (click)="addCartShopping()" id="add_cart">Adicionar no carrinho</button>
+                        }
                         <button id="buy_now">Comprar produto</button>
                     </div>
                 </div>
