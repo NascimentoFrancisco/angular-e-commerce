@@ -106,7 +106,7 @@ export class HeaderComponent implements OnInit{
     this.router.navigate(["user"]);
   }
   public navigateToShoppingCart(){
-    this.router.navigate(["user"]);
+    this.router.navigate(["user/cart"]);
   }
 
   /* Menu Responsiveness */

@@ -1,10 +1,37 @@
-<div class="title_table">
-    <h4>{{ title }}</h4>
-</div>
-<div class="container_shopping">
-    <app-item-list-content
-        [listPurchases]="true"
-    ></app-item-list-content>
-    
-</div>
+
+@if (shoppingsByUser.length > 0 && readingDone) {
+    <div class="title_table">
+        <h4>{{ title }}</h4>
+    </div>
+    <div class="container_shopping">
+        @for (shopping of shoppingsByUser; track $index) {
+            <app-item-list-content
+                [shopping]="shopping"
+            ></app-item-list-content>
+        }
+    </div>
+} @else if (shoppingCartByUser.length > 0 && readingDone) {
+    <div class="title_table">
+        <h4>{{ title }}</h4>
+    </div>
+    <div class="container_shopping">
+        @for (shoppingCart of shoppingCartByUser; track $index) {
+            <app-item-list-content
+                [shoppingCart]="shoppingCart"
+            ></app-item-list-content>
+        }
+    </div>
+} @else if(!readingDone) {
+    <app-spinner-page-info></app-spinner-page-info>
+} @else if (readingDone && shoppingCartByUser.length === 0 && listCartItems) {
+    <app-not-content-container
+        [title]="'Ops! Você não tem nenhum produto no carrinho ainda.'"
+        [subtitle]="'Clique aqui e escolha seus productos!'"
+    ></app-not-content-container>
+} @else if(readingDone && shoppingsByUser.length === 0 && listPurchases){
+    <app-not-content-container
+        [title]="'Ops! Você não tem nenhuma compra ainda.'"
+        [subtitle]="'Clique aqui e faça a sua primeira compra!'"
+    ></app-not-content-container>
+}
 
