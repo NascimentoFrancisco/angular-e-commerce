@@ -1,0 +1,18 @@
+@if (isVisible) {
+    <div id="modal_confirmation">
+        <div class="modal_content">
+            <div class="header_modal">
+                <h3>Confirmação</h3>
+            </div>
+            <div class="body_modal">
+                <p [innerHTML]="(message)"></p>
+            </div>
+            <div class="actions_modal_content">
+                <div class="actions_modal">
+                    <button class="confirm_action_modal" (click)="confirm()">Confirmar</button>
+                    <button class="cancel_action_modal" (click)="closeModal()">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}

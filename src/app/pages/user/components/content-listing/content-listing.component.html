@@ -18,6 +18,7 @@
         @for (shoppingCart of shoppingCartByUser; track $index) {
             <app-item-list-content
                 [shoppingCart]="shoppingCart"
+                (shoppingCartDeleted)="getAllShoppingCartsByUser()"
             ></app-item-list-content>
         }
     </div>
