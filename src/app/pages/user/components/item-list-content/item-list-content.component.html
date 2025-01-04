@@ -8,11 +8,41 @@
                     <li>Quantidade: {{ shopping.quantity_products }}</li>
                     <li>Total: 89,90</li>
                 </ul>
-            <h4>Situação: Em aberto</h4>
+            @if (shopping.cancelled) {
+                <h4>Situação: <b [style]="{'color': '#fc0000'}">Cancelada</b></h4>    
+            } @else{
+                @if (shopping.payment_status && shopping.status) {
+                    <!--  
+                    Pode ser cancelada, pois falta algum processo do lado do vendendor ainda
+                    -->
+                    <h4>Situação: <b [style]="{'color': '#0b8300'}">Em aberto</b></h4>
+                } @else if (!shopping.payment_status && shopping.status) {
+                    <!-- Falta pagar, então pode ser cancedada ainda -->
+                    <h4>Situação: <b [style]="{'color': '#0b8300'}">Aguardando pagamento</b></h4>
+                } @else if (!shopping.status && shopping.payment_status) {
+                    <!-- Finalizada, não pode ser canceldada mais -->
+                    <h4>Situação: <b [style]="{'color': '#0b8300'}">Finalizada</b></h4>
+                }
+            }
         </div>
         <div class="shopping_actions">
-            <button class="actions_button">Ver detalhes</button>
-            <button class="actions_button">Repetir compra</button>
+            @if (shopping.cancelled) {
+                <button class="actions_button">Repetir compra</button>
+                <button class="actions_button">Ver detalhes</button>
+            } @else {
+                @if (shopping.payment_status && shopping.status) {
+                    <button class="actions_button">Repetir compra</button>
+                    <button class="actions_button">Ver detalhes</button>
+                    <button class="delete_shopping_cart">Cancelamento</button>
+                } @else if (!shopping.payment_status && shopping.status) {
+                    <button class="finish_shopping_cart">Pagamento</button>
+                    <button class="delete_shopping_cart">Cancelamento</button>
+                    <button class="actions_button">Ver detalhes</button>
+                } @else if (!shopping.status && shopping.payment_status) {
+                    <button class="actions_button">Repetir compra</button>
+                    <button class="actions_button">Ver detalhes</button>
+                }
+            }
         </div>
     </div>
 } @else if (shoppingCart){
@@ -32,7 +62,7 @@
         </div>
         <div class="shopping_actions">
             <button class="finish_shopping_cart">Finalizar compra</button>
-            <button class="delete_shopping_cart">Apagar</button>
+            <button class="delete_shopping_cart" (click)="confirmDeleteShoppingCart()">Apagar</button>
         </div>
     </div>
 }

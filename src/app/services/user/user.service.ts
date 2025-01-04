@@ -5,6 +5,7 @@ import { environment } from '../../../environments/environment.development';
 import { AuthService } from '../auth/auth.service';
 import { Observable } from 'rxjs';
 import { UserResponse } from '../../interfaces/responses/user/userResponse';
+import { UserUpdateRequest } from '../../interfaces/requests/user/userUpdateRequest';
 
 @Injectable({
   providedIn: 'root'
@@ -18,6 +19,10 @@ export class UserService {
 
   public getUser(userId: string):Observable<UserResponse>{
     return this.http.get<UserResponse>(`${environment.BASE_URL}/user/${userId}/`);
+  }
+
+  public editUser(userId: string, userUpdateRequest: UserUpdateRequest){
+    return this.http.put(`${environment.BASE_URL}/user/${userId}/`, userUpdateRequest);
   }
 
 }

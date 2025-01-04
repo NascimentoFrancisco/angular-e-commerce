@@ -42,7 +42,6 @@ export class ContentListingComponent implements OnInit{
   public getAllshoppingByUser(){
     this.shoppingService.getShoppingsByUser(this.user.id).subscribe({
       next: (response) => {
-        console.log(response);
         if(response){
           this.shoppingsByUser = response;
           this.readingDone = true;

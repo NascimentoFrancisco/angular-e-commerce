@@ -1,5 +1,11 @@
 
-<app-form-user
-    [isSuperuser]="false"
-    [editOrCad]="false"
-></app-form-user>
+@if (loading) {
+    <app-spinner-page-info></app-spinner-page-info>
+} @else {
+    <app-form-user
+        [isSuperuser]="isSuperuser"
+        [editOrCad]="editOrCreate"
+        [userEdit]="userEdit"
+        [idUserEdit]="userId"
+    ></app-form-user>
+}
