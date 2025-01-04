@@ -12,7 +12,7 @@
         </div>
         @if (allowsActions) {
             <div class="actions_header">
-                <button class="edit_profile">
+                <button class="edit_profile" (click)="navigateToEditUser()">
                     <img src="../../../../assets/user-avatar.png" alt="edit-profile">
                 </button>
                 <button class="delete_profile">

@@ -35,7 +35,6 @@ export class ItemListContentComponent implements OnInit{
   
   ngOnInit(): void {
     this.totalValue = this.shoppingCart ? this.shoppingCart.product.amount : 0;
-    console.log(this.shopping);
   }
   
   public incrementQuantity(){

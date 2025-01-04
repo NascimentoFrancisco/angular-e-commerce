@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserResponse } from '../../../../interfaces/responses/user/userResponse';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-container-information',
@@ -13,4 +14,9 @@ export class AccountContainerInformationComponent {
   @Input() user!: UserResponse;
   @Input() allowsActions = false;
   
+  constructor(private router: Router) {}
+
+  public navigateToEditUser(){
+    this.router.navigate(["user/edit"]);
+  }
 }
