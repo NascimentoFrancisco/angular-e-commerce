@@ -9,7 +9,14 @@
             </div>
             <div class="actions_modal_content">
                 <div class="actions_modal">
-                    <button class="confirm_action_modal" (click)="confirm()">Confirmar</button>
+                    <button class="confirm_action_modal" (click)="confirm()">
+                        @if (confirmClicked) {
+                            Aguarde
+                            <app-circular-progress></app-circular-progress>
+                        }@else {
+                            Confirmar
+                        }
+                    </button>
                     <button class="cancel_action_modal" (click)="closeModal()">Cancelar</button>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import { CurrencyBrPipe } from '../../../../utils/pipes/currencybr/currency-br.p
 import { ModalService } from '../../../../services/modal/modal.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShoppingCartService } from '../../../../services/shopping_cart/shopping-cart.service';
+import { ShoppingService } from '../../../../services/shopping/shopping.service';
 
 @Component({
   selector: 'app-item-list-content',
@@ -29,10 +30,12 @@ export class ItemListContentComponent implements OnInit{
     private snackbarService: SnackbarService,
     private modalService: ModalService,
     private shoppingCartService: ShoppingCartService,
+    private shoppingService: ShoppingService,
   ) {}
   
   ngOnInit(): void {
     this.totalValue = this.shoppingCart ? this.shoppingCart.product.amount : 0;
+    console.log(this.shopping);
   }
   
   public incrementQuantity(){
@@ -96,5 +99,7 @@ export class ItemListContentComponent implements OnInit{
       })
     }
   }
+
+  /* Shippings */
 
 }

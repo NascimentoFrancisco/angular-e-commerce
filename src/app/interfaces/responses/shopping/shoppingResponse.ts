@@ -7,6 +7,7 @@ export interface ShoppingResponse {
     quantity_products: number,
     slug: string,
     status: boolean,
+    cancelled: boolean,
     updated_at: Date
     user: string,
     product: ProductsResponse

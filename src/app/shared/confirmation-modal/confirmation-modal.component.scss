@@ -40,6 +40,9 @@
 }
 
 .confirm_action_modal{
+    display: flex;
+    gap: 2px;
+    align-items: center;
     background-color: #0b8300;
     border-radius: 4px;
     padding: 6px;
