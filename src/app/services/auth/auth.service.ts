@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { LoginResponse } from '../../interfaces/responses/auth/loginResponse';
 import { environment } from '../../../environments/environment.development';
 import { Router } from '@angular/router';
+import { ChangePasswordRequest } from '../../interfaces/requests/auth/changePasswordRequest';
+import { ChangePasswordResponse } from '../../interfaces/responses/auth/changePasswordResponse';
 
 
 @Injectable({
@@ -19,6 +21,12 @@ export class AuthService {
 
   public login(loginRequest: LoginRequest): Observable<LoginResponse>{
     return this.http.post<LoginResponse>(`${environment.BASE_URL}/token/`, loginRequest);
+  }
+
+  public changePassword(changePasswordRequest: ChangePasswordRequest): Observable<ChangePasswordResponse>{
+    return this.http.put<ChangePasswordResponse>(
+      `${environment.BASE_URL}/user/change-password/`, changePasswordRequest
+    );
   }
 
   public setAllInfoAuth(accessToken: string, refreshToken: string, user_id: string){
