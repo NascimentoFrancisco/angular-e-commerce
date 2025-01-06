@@ -8,6 +8,7 @@ import { SpinnerComponent } from "../../../shared/spinner/spinner.component";
 import { SnackbarService } from '../../../services/snackbar/snackbar.service';
 import { ChangePasswordRequest } from '../../../interfaces/requests/auth/changePasswordRequest';
 import { Router } from '@angular/router';
+import { ModalService } from '../../../services/modal/modal.service';
 
 @Component({
   selector: 'app-auth-forms',
@@ -41,7 +42,8 @@ export class AuthFormsComponent implements OnInit{
   constructor (
     private authService: AuthService,
     private router: Router,
-    private snackBarService: SnackbarService
+    private snackBarService: SnackbarService,
+    private modalService: ModalService,
   ) {}
 
   ngOnInit(): void {
@@ -54,7 +56,12 @@ export class AuthFormsComponent implements OnInit{
   public onSubmit(){
     if(this.loginOrChangePassword){
       if(this.changePasswordFormData.password1 != "" && this.changePasswordFormData.password2 != ""){
-        this.changePassword();
+        this.modalService.openModal(
+          `<h2>Atenção!</h2><p>Ao mudar sua senha tenha certeza de que memorizou a nova senha para conseguir 
+          efetuar login novamente.</p>
+          <span>Você tem certeza que deseja alterar sua senha?</span>`,
+          () => this.changePassword()
+        )
       }
     }else{
       if(this.loginFormData.username !== "" && this.loginFormData.password !== ""){
