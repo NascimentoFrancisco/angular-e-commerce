@@ -15,4 +15,10 @@ export class ShoppingService {
     return this.http.get<ShoppingResponse[]>(`${environment.BASE_URL}/shopping/?search=${userId}`);
   }
 
+  public cancelShopping(idShopping: string){
+    return this.http.patch(
+      `${environment.BASE_URL}/shopping/${idShopping}/`,
+      { cancelled: true }
+    )
+  }
 }

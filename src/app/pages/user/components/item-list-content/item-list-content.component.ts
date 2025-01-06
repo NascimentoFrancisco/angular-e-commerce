@@ -22,6 +22,7 @@ export class ItemListContentComponent implements OnInit{
   @Input() shopping?: ShoppingResponse;
   @Input() shoppingCart?: ShoppingCartResponse;
   @Output() shoppingCartDeleted = new EventEmitter<void>();
+  @Output() shoppingUpdateList = new EventEmitter<void>();
   public quantityProducts = 1;
   public totalValue = 0;
   public buttonClicked = false;
@@ -100,5 +101,25 @@ export class ItemListContentComponent implements OnInit{
   }
 
   /* Shippings */
+  public handleDeleteShoppingCart(){
+    this.modalService.openModal(
+      "<h2>Atenção!</h2><p>Você realmente deseja <b>cancelar</b> sua compra?</p>",
+      () => this.cancelShopping()
+    )
+  }
+
+  private cancelShopping(){
+    this.shoppingService.cancelShopping(this.shopping!.id).subscribe({
+      next: (response) => {
+        if(response){
+          this.shoppingUpdateList.emit();
+          this.snackbarService.show("Compra cancelada com sucesso!", "success");
+        }
+      },
+      error: (err) => {
+        this.snackbarService.show("Erro ao cancelar compra", "error");
+      }
+    });
+  }
 
 }

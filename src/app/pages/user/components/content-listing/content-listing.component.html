@@ -7,6 +7,7 @@
         @for (shopping of shoppingsByUser; track $index) {
             <app-item-list-content
                 [shopping]="shopping"
+                (shoppingUpdateList)="getAllshoppingByUser()"
             ></app-item-list-content>
         }
     </div>

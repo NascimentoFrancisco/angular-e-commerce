@@ -33,10 +33,10 @@
                 @if (shopping.payment_status && shopping.status) {
                     <button class="actions_button">Repetir compra</button>
                     <button class="actions_button">Ver detalhes</button>
-                    <button class="delete_shopping_cart">Cancelamento</button>
+                    <button class="delete_shopping_cart" (click)="handleDeleteShoppingCart()">Cancelamento</button>
                 } @else if (!shopping.payment_status && shopping.status) {
                     <button class="finish_shopping_cart">Pagamento</button>
-                    <button class="delete_shopping_cart">Cancelamento</button>
+                    <button class="delete_shopping_cart" (click)="handleDeleteShoppingCart()">Cancelamento</button>
                     <button class="actions_button">Ver detalhes</button>
                 } @else if (!shopping.status && shopping.payment_status) {
                     <button class="actions_button">Repetir compra</button>
