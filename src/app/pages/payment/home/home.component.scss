@@ -1,0 +1,146 @@
+
+main{
+    background-color: #EBEBEB;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.container{
+    margin-top: 40px;
+    display: flex;
+    background-color: #ffff;
+    width: 80vw;
+    height: 80vh;
+    padding: 12px;
+    flex-direction: row;
+    border-radius: 4px;
+    flex-wrap: wrap;
+}
+
+.product_info{
+    width: 50%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.image_container{
+    width: 100%;
+    height: 50%;
+}
+
+.product_info img{
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 450px;
+}
+
+.payment_methods{
+    width: 50%;
+    height: auto;
+    border: 1px solid #808080;
+    border-radius: 4px;
+    padding: 12px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.description_shopping{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.divider{
+    display: block;
+    margin-top: 5px;
+    width: 100%;
+    height: 2px;
+    background-color: #FC9E32;
+}
+
+.select_payment_methods{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.select_payment_methods h4{
+    margin-top: 30px;
+}
+
+.options_payment_methods{
+    display: flex;
+    gap: 4px;
+    padding: 10px;
+    width: 100%;
+    background-color: #80808036;
+    border-radius: 4px;
+    border: 1px solid #005CC8;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.options_payment_methods input, label, img{
+    cursor: pointer;
+}
+
+.option label{
+    margin-left: 4px;
+}
+
+.options_payment_methods img{
+    width: 40px;
+    height: auto;
+}
+
+.finish_shopping{
+    margin-top: 30px;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+#pay{
+    background-color: #FC9E32;
+    color: #ffff;
+    font-size: 18px;
+    font-weight: 800;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100px;
+}
+
+@media (max-width: 768px) {
+    main{
+        height: 100%;
+    }
+    
+    .container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        height: auto;
+        margin-bottom: 30px;
+    } 
+
+    .payment_methods{
+        width: 90%;
+        height: auto;
+        border: 1px solid #808080;
+        border-radius: 4px;
+        padding: 12px;
+        justify-content: center;
+    }
+
+    .divider{
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+}

@@ -1,0 +1,50 @@
+<app-header-not-authenticated></app-header-not-authenticated>
+
+<main>
+    @if (shopping) {
+        <div class="container">
+            <div class="product_info">
+                <h4>{{ shopping.product.name }}</h4>
+                <div class="image_container">
+                    <img src="{{ shopping.product.image_url }}" alt="Cpacete">
+                </div>
+            </div>
+            <div class="payment_methods">
+                <div class="description_shopping">
+                    <h4>{{ shopping.product.name }}</h4>
+                    <h4>Quantidade de produtos: {{ shopping.quantity_products }}</h4>
+                    <h4>Valor unitário do produto: {{ shopping.product.price | currencyBr }}</h4>
+                    <h4>Valor da compra: {{ calculateValueShopping() | currencyBr }}</h4>
+                </div>
+                <div class="divider"></div>
+                <div class="select_payment_methods">
+                    <h4>Escolha um método de pagamento</h4>
+                    <div class="options_payment_methods" (click)="selectPaymentMethod('bank_slip')">
+                        <div class="option">
+                            <input type="radio" id="bank_slip" name="payment" value="bank_slip" checked>
+                            <label for="bank_slip">Boleto bancário</label>
+                        </div>
+                        <img src="../../assets/bank_slip.png" alt="">
+                    </div>
+                    <div class="options_payment_methods" (click)="selectPaymentMethod('credit_card')">
+                        <div class="option">
+                            <input type="radio" id="credit_card" name="payment" value="credit_card" checked>
+                            <label for="credit_card">Cartão de cŕedito</label>
+                        </div>
+                        <img src="../../assets/credit-cart.png">
+                    </div>
+                    <div class="options_payment_methods" (click)="selectPaymentMethod('pix')">
+                        <div class="option">
+                            <input type="radio" id="pix" name="payment" value="pix" checked>
+                            <label for="pix">Pix</label>
+                        </div>
+                        <img src="../../assets/pix.png">
+                    </div>
+                </div>
+                <div class="finish_shopping">
+                    <button id="pay">Pagar</button>
+                </div>
+            </div>
+        </div>
+    }
+</main>
