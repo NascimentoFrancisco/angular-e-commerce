@@ -1,0 +1,143 @@
+main{
+    background-color: #EBEBEB;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.container{
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #ffff;
+    width: 80vw;
+    height: 80vh;
+    padding: 12px;
+    flex-direction: row;
+    border-radius: 4px;
+    flex-wrap: wrap;
+}
+
+.genereate_slip{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: auto;
+}
+
+.genereate_slip h4{
+    margin-bottom: 30px;
+}
+
+.input_cpf{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 4px;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.conatiner_input{
+    display: flex;
+    flex-direction: column;
+    color: #FF8800;
+    width: 80%;
+}
+
+.conatiner_input label{
+    margin-bottom: 2px;
+}
+
+.conatiner_input input{
+    height: 28px;
+    border: 1px solid #FF8800;
+    outline: #FF8800;
+    border-radius: 4px;
+    color: #757575;
+    margin-bottom: 10px;
+    padding-left: 8px;
+}
+
+.input_valid{
+    color: #04d604;
+}
+.input_invalid{
+    color: #ff0000;
+}
+
+.defautl_button{
+    background-color: #FC9E32;
+    color: #ffff;
+    font-size: 18px;
+    font-weight: 800;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.container_qrcode{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+}
+
+.inf_pix{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+}
+
+.inf_pix h4{
+    white-space: normal;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.inf_pix span{
+    word-wrap: break-word;
+}
+
+.cpoy_value{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    gap: 4px;
+}
+
+.cpoy_value h4, span{
+    word-break: break-word;
+    overflow-wrap: anywhere;
+}
+
+.coppy_button{
+    display: flex;
+    align-items: center;
+    background-color: #FF8800;
+    color: #ffff;
+    gap: 3px;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.coppy_button img{
+    width: 24px;
+}
+
+@media (max-width: 768px) {
+    .container{
+        width: 90vw;
+        height: auto;
+    }
+}

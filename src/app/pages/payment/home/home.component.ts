@@ -48,7 +48,7 @@ export class HomeComponent implements OnInit{
       value: this.shopping!.product.price,
       total_value: this.shopping!.product.price * this.shopping!.quantity_products,
     }
-    this.router.navigate(['payment/bank-slip'], {
+    this.router.navigate(['payment/pix'], {
       state: { paymentRequest }
     });
   }
