@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { HeaderNotAuthenticatedComponent } from "../../../shared/header-not-authenticated/header-not-authenticated.component";
 import { ShoppingResponse } from '../../../interfaces/responses/shopping/shoppingResponse';
 import { CurrencyBrPipe } from '../../../utils/pipes/currencybr/currency-br.pipe';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -15,6 +16,8 @@ import { CurrencyBrPipe } from '../../../utils/pipes/currencybr/currency-br.pipe
 })
 export class HomeComponent implements OnInit{
   @Input() shopping?: ShoppingResponse;
+
+  constructor(private router: Router){}
   
   selectPaymentMethod(method: string): void {
     const inputElement = document.querySelector(`input[value="${method}"]`) as HTMLInputElement;
@@ -27,7 +30,6 @@ export class HomeComponent implements OnInit{
     if(window.history.state){
       const state = window.history.state
       this.shopping = state.shopping;
-      console.log(this.shopping)
     }
   }
 
@@ -36,6 +38,19 @@ export class HomeComponent implements OnInit{
       return this.shopping.product.price * this.shopping.quantity_products
     }
     return 0;
+  }
+
+  public navigateToBankSlip(){
+    let paymentRequest = {
+      shopping: this.shopping!.id,
+      payment_method: "BKS",
+      divided_into: 1,
+      value: this.shopping!.product.price,
+      total_value: this.shopping!.product.price * this.shopping!.quantity_products,
+    }
+    this.router.navigate(['payment/bank-slip'], {
+      state: { paymentRequest }
+    });
   }
 
 }

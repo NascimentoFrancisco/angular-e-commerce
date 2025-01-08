@@ -47,7 +47,7 @@ export class AuthFormsComponent implements OnInit{
   ) {}
 
   ngOnInit(): void {
-    if(window.history.state){
+    if(window.history.state.loginOrChangePassword){
       const state = window.history.state
       this.loginOrChangePassword = state
     }
