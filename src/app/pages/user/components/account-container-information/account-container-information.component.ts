@@ -19,4 +19,9 @@ export class AccountContainerInformationComponent {
   public navigateToEditUser(){
     this.router.navigate(["user/edit"]);
   }
+  public navigateToChangePassword(){
+    this.router.navigate(["user/change-password"], {
+      state: { loginOrChangePassword: true }
+    });
+  }
 }

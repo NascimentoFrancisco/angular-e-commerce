@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-circular-progress',
@@ -8,5 +8,5 @@ import { Component } from '@angular/core';
   styleUrl: './circular-progress.component.scss'
 })
 export class CircularProgressComponent {
-
+  @Input() backgroundColor: string = '#fa8601';
 }

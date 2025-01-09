@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HeaderNotAuthenticatedComponent } from "../../../shared/header-not-authenticated/header-not-authenticated.component";
 import { DefaultInputTextComponent } from "../../../shared/default-input-text/default-input-text.component";
 import { DefaultButtonComponent } from "../../../shared/default-button/default-button.component";
@@ -6,7 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../../services/auth/auth.service';
 import { SpinnerComponent } from "../../../shared/spinner/spinner.component";
 import { SnackbarService } from '../../../services/snackbar/snackbar.service';
+import { ChangePasswordRequest } from '../../../interfaces/requests/auth/changePasswordRequest';
 import { Router } from '@angular/router';
+import { ModalService } from '../../../services/modal/modal.service';
 
 @Component({
   selector: 'app-auth-forms',
@@ -21,7 +23,7 @@ import { Router } from '@angular/router';
   templateUrl: './auth-forms.component.html',
   styleUrl: './auth-forms.component.scss'
 })
-export class AuthFormsComponent {
+export class AuthFormsComponent implements OnInit{
 
   @Input() loginOrChangePassword: boolean = false;// If false, make login
   public buttonStatus = true;
@@ -32,7 +34,7 @@ export class AuthFormsComponent {
     password: "",
   }
 
-  changhePasswordFormData = {
+  changePasswordFormData = {
     password1: "",
     password2: "",
   }
@@ -40,13 +42,26 @@ export class AuthFormsComponent {
   constructor (
     private authService: AuthService,
     private router: Router,
-    private snackBarService: SnackbarService
+    private snackBarService: SnackbarService,
+    private modalService: ModalService,
   ) {}
+
+  ngOnInit(): void {
+    if(window.history.state.loginOrChangePassword){
+      const state = window.history.state
+      this.loginOrChangePassword = state
+    }
+  }
 
   public onSubmit(){
     if(this.loginOrChangePassword){
-      if(this.changhePasswordFormData.password1 != "" && this.changhePasswordFormData.password2 != ""){
-        this.changePassword();
+      if(this.changePasswordFormData.password1 != "" && this.changePasswordFormData.password2 != ""){
+        this.modalService.openModal(
+          `<h2>Atenção!</h2><p>Ao mudar sua senha tenha certeza de que memorizou a nova senha para conseguir 
+          efetuar login novamente.</p>
+          <span>Você tem certeza que deseja alterar sua senha?</span>`,
+          () => this.changePassword()
+        )
       }
     }else{
       if(this.loginFormData.username !== "" && this.loginFormData.password !== ""){
@@ -90,6 +105,36 @@ export class AuthFormsComponent {
   }
 
   private changePassword(){
+    console.log(this.changePasswordFormData.password1)
+    let changePasswordRequest: ChangePasswordRequest = {
+      password: this.changePasswordFormData.password1,
+      password2: this.changePasswordFormData.password2
+    }
+
+    this.authService.changePassword(changePasswordRequest).subscribe({
+      next: (response) => {
+        if(response){
+          this.changePasswordFormData.password1 = "";
+          this.changePasswordFormData.password2 = "";
+          this.handleSnackBarMesssage(response.detail, 'success');
+          this.router.navigate(["user/"])
+        }
+        console.log(response);
+      },
+      error: (err) => {
+        if(err.status === 400){
+          if(err.error.password){
+            this.handleSnackBarMesssage(err.error.password, "error");
+          }
+          if(err.error.password2){
+            this.handleSnackBarMesssage(err.error.password2, "error");
+          }
+        } else {
+          console.log(err)
+          this.handleSnackBarMesssage("Erro ao alterar senha!", "error");
+        }
+      }
+    });
 
   }
 
@@ -99,7 +144,7 @@ export class AuthFormsComponent {
   }
 
   private handleSnackBarMesssage(message: string, type: 'success' | 'error' | 'warning' | 'info'): void{
-    this.snackBarService.show(message, type);
+    this.snackBarService.show(message, type, 5000);
   }
 
 }

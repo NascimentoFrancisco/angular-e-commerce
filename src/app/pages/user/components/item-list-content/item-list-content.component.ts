@@ -7,6 +7,7 @@ import { ModalService } from '../../../../services/modal/modal.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShoppingCartService } from '../../../../services/shopping_cart/shopping-cart.service';
 import { ShoppingService } from '../../../../services/shopping/shopping.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-item-list-content',
@@ -22,11 +23,13 @@ export class ItemListContentComponent implements OnInit{
   @Input() shopping?: ShoppingResponse;
   @Input() shoppingCart?: ShoppingCartResponse;
   @Output() shoppingCartDeleted = new EventEmitter<void>();
+  @Output() shoppingUpdateList = new EventEmitter<void>();
   public quantityProducts = 1;
   public totalValue = 0;
   public buttonClicked = false;
 
   constructor(
+    private router: Router,
     private snackbarService: SnackbarService,
     private modalService: ModalService,
     private shoppingCartService: ShoppingCartService,
@@ -100,5 +103,31 @@ export class ItemListContentComponent implements OnInit{
   }
 
   /* Shippings */
+  public handleDeleteShoppingCart(){
+    this.modalService.openModal(
+      "<h2>Atenção!</h2><p>Você realmente deseja <b>cancelar</b> sua compra?</p>",
+      () => this.cancelShopping()
+    )
+  }
+
+  private cancelShopping(){
+    this.shoppingService.cancelShopping(this.shopping!.id).subscribe({
+      next: (response) => {
+        if(response){
+          this.shoppingUpdateList.emit();
+          this.snackbarService.show("Compra cancelada com sucesso!", "success");
+        }
+      },
+      error: (err) => {
+        this.snackbarService.show("Erro ao cancelar compra", "error");
+      }
+    });
+  }
+
+  public navigateToPayment(){
+    this.router.navigate(["payment"], {
+      state: { shopping: this.shopping }
+    });
+  }
 
 }
