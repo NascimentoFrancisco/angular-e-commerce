@@ -62,9 +62,14 @@ export class CreditCartComponent implements OnInit{
     if(window.history.state){
       const state = window.history.state
       this.shopping = state.shopping;
-      this.calculateNumberDivisions();
-      this.indexpossibleDivision = this.possibleDivisions.length - 1;
+      if(!this.shopping){
+        this.router.navigate(["user"]);
+      } else {
+        this.calculateNumberDivisions();
+        this.indexpossibleDivision = this.possibleDivisions.length - 1;
+      }
     }
+    
   }
 
   private cpfValidator(control: AbstractControl): ValidationErrors | null {

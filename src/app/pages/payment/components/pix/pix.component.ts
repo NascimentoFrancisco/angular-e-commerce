@@ -4,6 +4,7 @@ import { PaymentService } from '../../../../services/payment/payment.service';
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
 import { HeaderNotAuthenticatedComponent } from "../../../../shared/header-not-authenticated/header-not-authenticated.component";
 import { QRCodeModule } from 'angularx-qrcode';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pix',
@@ -25,6 +26,7 @@ export class PixComponent implements OnInit{
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private paymentService: PaymentService,
     private snackbarService: SnackbarService
   ) {
@@ -37,7 +39,10 @@ export class PixComponent implements OnInit{
     if(window.history.state){
       const state = window.history.state
       this.paymentRequest = state.paymentRequest as PaymentRequest;
-      console.log(this.paymentRequest)
+    }
+    
+    if(!this.paymentRequest){
+      this.router.navigate(["user"]);
     }
   } 
   

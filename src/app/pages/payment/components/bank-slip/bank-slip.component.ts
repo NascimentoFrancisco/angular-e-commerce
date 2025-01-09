@@ -44,6 +44,10 @@ export class BankSlipComponent implements OnInit{
       this.paymentRequest = state.paymentRequest as PaymentRequest;
       console.log(this.paymentRequest)
     }
+
+    if(!this.paymentRequest){
+      this.router.navigate(["user"]);
+    }
   }
   
   private cpfValidator(control: AbstractControl): ValidationErrors | null {

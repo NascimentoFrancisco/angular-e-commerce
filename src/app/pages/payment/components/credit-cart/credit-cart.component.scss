@@ -93,7 +93,7 @@ main{
 
 .cpf_input input{
     height: 28px;
-    width: 90%;
+    width: 100%;
     border: 1px solid #FF8800;
     outline: #FF8800;
     border-radius: 4px;
@@ -106,13 +106,13 @@ main{
     display: flex;
     flex-wrap: wrap;
     width: 100%;
-    gap: 4px;
+    gap: 1%;
 }
 
 .select_input{
     display: flex;
     flex-direction: column;
-    width: 45%;
+    width: 49%;
 }
 
 .select_input label{
@@ -155,8 +155,18 @@ main{
 }
 
 @media (max-width: 768px) {
+    main{
+        height: 100%;
+    }
     .container{
         width: 90vw;
         height: auto;
+        margin-bottom: 30px;
+    }
+    .select_amount_payments{
+        width: 100%;
+    }
+    .card_details{
+        width: 100%;
     }
 }
