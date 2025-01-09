@@ -6,6 +6,7 @@ import { jsPDF } from 'jspdf';
 import { PaymentService } from '../../../../services/payment/payment.service';
 import { PaymentRequest } from '../../../../interfaces/requests/payment/paymentRequest';
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bank-slip',
@@ -27,6 +28,7 @@ export class BankSlipComponent implements OnInit{
   
   constructor(
     private fb: FormBuilder,
+    private router: Router,
     private sanitizer: DomSanitizer,
     private paymentService: PaymentService,
     private snackbarService: SnackbarService
@@ -97,6 +99,7 @@ export class BankSlipComponent implements OnInit{
             this.snackbarService.show(
               "Compra paga com sucesso!", "success"
             );
+            this.router.navigate(["user"]);
           }
         },
         error: (err) => {

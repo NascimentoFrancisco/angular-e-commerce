@@ -1,1 +1,98 @@
-<p>credit-cart works!</p>
+<app-header-not-authenticated></app-header-not-authenticated>
+<main>
+    <div class="container">
+        <div class="select_amount_payments">
+            <h4>Selecione em quantas vezes deseja pagar</h4>
+            <div class="all_options">
+                @for (item of possibleDivisions; track $index) {
+                    <div class="option_amount_payments" (click)="selectPaymentMethod($index.toString())">
+                        <div class="option_amount" >
+                            <input type="radio" id="{{ $index }}" name="payment_shoppint" value="{{ $index }}" checked>
+                            <label for="{{ $index }}">{{ item.amount }} x {{ item.value | currencyBr }}</label>
+                        </div>
+                        <span>Total de: {{ item.valueTotal | currencyBr }} </span>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="card_details">
+            <h4>Preencha as informações necessárias</h4>
+            <div class="container_form_card_details">
+                <form class="credit_cart_form" [formGroup]="creditCardInformationForm" (ngSubmit)="onSubmit()">
+                    <div class="cpf_input">
+                        <label for="cpf">Insira seu CPF:</label>
+                        <input
+                            type="text" 
+                            id="cpf" 
+                            name="cpf" 
+                            placeholder="00000000000"
+                            maxlength="11"
+                            formControlName="cpf"
+                        >
+                        @if (creditCardInformationForm.value.cpf && creditCardInformationForm.get('cpf')?.invalid) {
+                            <small class="input_invalid">CPF iválido. Por favor insira um CPF válido!</small>
+                        }
+                    </div>
+                    <div class="dates_input_select">
+                        <div class="select_input">
+                            <label>Mês do cartão</label>
+                            <select type="text" id="month" formControlName="creditCartMonth">
+                                <option value="" disabled selected>Selecione o mês</option>
+                                @for (month of months; track $index) {
+                                    <option [value]="'month'">{{month}}</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="select_input">
+                            <label for="year">Ano do cartão</label>
+                            <select type="text" id="year" formControlName="creditCartYear">
+                                <option value="" disabled selected>Selecione o ano</option>
+                                @for (year of years; track $index) {
+                                    <option [value]="'year'">{{year}}</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="cpf_input">
+                        <label for="creditCardNumber">Número do cartão</label>
+                        <input
+                            type="text" 
+                            id="creditCardNumber" 
+                            name="creditCardNumber" 
+                            formControlName="creditCardNumber" 
+                            placeholder="00000000000"
+                            maxlength="16"
+                        >
+                        @if (creditCardInformationForm.value.creditCardNumber && creditCardInformationForm.get('creditCardNumber')?.errors) {
+                            <small class="input_invalid">Apenas números são permitidos!</small>
+                        }
+                    </div>
+                    <div class="cpf_input">
+                        <label for="creditCartCvc">Código CVC</label>
+                        <input
+                            type="text"
+                            id="creditCartCvc" 
+                            name="creditCartCvc" 
+                            formControlName="creditCartCvc"
+                            placeholder="000"
+                            maxlength="3"
+                        >
+                        @if (creditCardInformationForm.value.creditCartCvc && creditCardInformationForm.get('creditCartCvc')?.errors) {
+                            <small class="input_invalid">Apenas números são permitidos!</small>
+                        }
+                    </div>
+                    <button type="submit" [disabled]="activeButton()" class="defautl_button">
+                        @if (clicked) {
+                            <app-circular-progress backgroundColor="#ffff"></app-circular-progress>
+                        }@else {
+                            Enviar
+                        }
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>

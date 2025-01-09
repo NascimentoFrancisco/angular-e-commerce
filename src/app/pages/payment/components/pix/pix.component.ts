@@ -83,6 +83,8 @@ export class PixComponent implements OnInit{
 
   private generatePixQRCode(){
     //Here a QR Code will be generated simulating a connection with an API that is PIX.
+    /* Here you can include the external payment service. Since this application does not 
+    have such a service, I will just generate a random QRCode.*/
     if(this.cpfForm.valid){
       this.valuDatPix = "fdshfdsfsahfjffjhsafkjkfsakfshfjshdjhhfsdfjdsakfjasfsajfkash.fdshfdsfsahfjffjhsafkjkfsakfshfjshdjhhfsdfjdsakfjasfsajfkash.fdshfdsfsahfjffjhsafkjkfsakfshfjshdjhhfsdfjdsakfjasfsajfkash"
     }

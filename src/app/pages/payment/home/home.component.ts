@@ -41,15 +41,16 @@ export class HomeComponent implements OnInit{
   }
 
   public navigateToBankSlip(){
-    let paymentRequest = {
+    /* let paymentRequest = {
       shopping: this.shopping!.id,
       payment_method: "BKS",
       divided_into: 1,
       value: this.shopping!.product.price,
       total_value: this.shopping!.product.price * this.shopping!.quantity_products,
-    }
-    this.router.navigate(['payment/pix'], {
-      state: { paymentRequest }
+    } */
+   let shopping = this.shopping;
+    this.router.navigate(['payment/credit-cart'], {
+      state: { shopping }
     });
   }
 

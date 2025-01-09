@@ -14,6 +14,10 @@ export const PaymentRoutes: Routes = [
         component: BankSlipComponent
     },
     {
+        path: "credit-cart",
+        component: CreditCartComponent
+    },
+    {
         path: "pix",
         component: PixComponent
     }
