@@ -1,0 +1,49 @@
+<app-header-not-authenticated></app-header-not-authenticated>
+<main>
+    @if (addressByUser.length > 0 && !loading) {
+        <div class="header_addres">
+            <div></div>
+
+            <div class="title_table">
+                <h4>Meus endereços</h4>
+            </div>
+
+            <div class="add">
+                <button class="button_add" (click)="navigateToCreateUpdate()">
+                    <img src="../../../../assets/plus .png" alt="add">
+                </button>
+            </div>
+        </div>
+        <div class="container_address">
+            @for (address of addressByUser; track $index) {
+                <div class="address_item">
+                    <div class="info_address">
+                        <div class="top_info">
+                            <h4>{{ address.city }}, {{ address.state }}</h4>
+                            <p>{{ address.street }}, Nº {{ address.number }}, {{ address.district }}</p>
+                        </div>
+                        <span>Complemento: {{ address.complement }}</span>
+                        <span>CEP: {{ address.cep }}</span>
+                        <span>Telefone: {{ address.phone_number }}</span>
+                    </div>
+    
+                    <div class="address_actions">
+                        <button class="edit_button" (click)="navigateToCreateUpdate(address.id)">Editar</button>
+                        <button class="delete_button" (click)="handleDeleteAddress(address.id)">Apagar</button>
+                    </div>
+    
+                </div>
+            }
+        </div>
+    } @else if (addressByUser.length === 0 && !loading) {
+        <app-not-content-container
+            [title]="'Ops! Você não tem nenhum endereço ainda.'"
+            [subtitle]="'Clique no botão de adiconar e cadastre seu primeiro endereço.'"
+        ></app-not-content-container>
+        <div class="add_address">
+            <button>Adicionar</button>
+        </div>
+    } @else if (loading) {
+        <app-spinner-page-info></app-spinner-page-info>
+    }
+</main>

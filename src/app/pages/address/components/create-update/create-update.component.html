@@ -1,0 +1,62 @@
+<app-header-not-authenticated></app-header-not-authenticated>
+<main>
+    <form class="card_form" [formGroup]="addressForm" (ngSubmit)="onSubmit()">
+        <div class="header-form">
+            @if (updateAddress) {
+                <h4>Olá seja bem vindo!</h4>
+                <span>Edite seu endereço abaixo.</span>    
+            } @else {
+                <h4>Olá seja bem vindo!</h4>
+                <span>Realize o cadastro de um novo endereço abaixo.</span>    
+            }
+        </div>
+        <div class="get_cep">
+            <div class="input_cep">
+                <label for="">CEP</label>
+                <input maxlength="8" type="text" id="cep" name="cep" formControlName="cep">
+                @if (addressForm.value.cep && !isValidCep(addressForm.value.cep) || !cepValid) {
+                    <small class="input_invalid">CEP iválido. Por favor insira um CPF válido!</small>
+                }
+            </div>
+        </div>
+        
+        <div class="container_city">
+            <div class="input_city">
+                <label for="city">Cidade</label>
+                <input type="text" id="city" name="city" formControlName="city">
+            </div>
+            <div class="input_state">
+                <label for="state">Estado</label>
+                <input type="text" id="state" name="state" formControlName="state">
+            </div>
+        </div>
+
+        <div class="container_city">
+            <div class="input_city">
+                <label for="street">Rua</label>
+                <input type="text" id="street" name="street" formControlName="street">
+            </div>
+            <div class="input_state">
+                <label for="district">Bairro</label>
+                <input type="text" id="district" name="district" formControlName="district">
+            </div>
+            <div class="input_number">
+                <label for="number">Número</label>
+                <input type="number" id="number" name="number" formControlName="number">
+            </div>
+        </div>
+
+        <div class="container_city">
+            <div class="input_city">
+                <label for="complement">Complemento</label>
+                <input type="text" id="complement" name="complement" formControlName="complement">
+            </div>
+            <div class="input_state">
+                <label for="phone_number">Telefone</label>
+                <input type="number" id="phone_number" name="phone_number" formControlName="phoneNumber">
+            </div>
+        </div>
+
+        <Button type="submit" class="submit_address">Salvar</Button>
+    </form>
+</main>

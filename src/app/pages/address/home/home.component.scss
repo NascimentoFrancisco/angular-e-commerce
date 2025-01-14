@@ -1,0 +1,147 @@
+
+main{
+    background-color: #EBEBEB;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    padding-top: 30px;
+}
+
+.header_addres{
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    width: 80%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #fc9e3265;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+
+.title_table{
+    text-align: center;
+}
+
+.add{
+    display: flex;
+    justify-self: end;
+    margin-right: 8px;
+}
+
+.button_add{
+    padding: 4px;
+    background-color: transparent;
+    border: 1px solid #0b8300;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.container_address{
+    display: flex;
+    background-color: #ffffff;
+    width: 80vw;
+    height: 70vh;
+    flex-direction: column;
+    align-items: center;
+    overflow: auto;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    padding: 10px;
+}
+
+.shopping_items{
+    display: flex;
+    justify-content: space-between;
+    width: 90%;
+    height: 200px;
+    border: 2px solid #FC9E32;
+    border-radius: 4px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.address_item{
+    display: flex;
+    justify-content: space-between;
+    width: 70vw;
+    height: 200px;
+    border: 2px solid #FC9E32;
+    border-radius: 4px;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.info_address{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 4px;
+}
+
+.top_info{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.top_info p{
+    color: rgba(0, 0, 0, 0.74);
+}
+
+.address_actions{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 20%;
+    gap: 10px;
+}
+
+.add_address{
+    margin-top: 20px;
+}
+
+.add_address button{
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #0b8300;
+    color: #ffffff;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.edit_button {
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #FC9E32;
+    color: #ffffff;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.delete_button{
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #fc0000;
+    color: #ffffff;
+    font-weight: 800;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .address_item{
+        flex-direction: column;
+        height: auto;
+        align-items: center;
+    }
+    .address_actions{
+        margin-top: 15px;
+        width: 100%;
+    }
+    
+}
