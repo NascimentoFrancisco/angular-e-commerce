@@ -31,4 +31,10 @@ export class AddressService {
     );
   }
 
+  public disableAddress(addresId: string): Observable<AddressResponse>{
+    return this.http.patch<AddressResponse>(
+      `${environment.BASE_URL}/address/${addresId}/`, { active: false }
+    );
+  }
+
 }

@@ -1,5 +1,6 @@
 export interface AddressRequest{
     cep: string,
+    active: boolean,
     city: string,
     state: string,
     district: string,

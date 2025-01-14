@@ -2,6 +2,7 @@ import { UserResponse } from "../user/userResponse";
 
 export interface AddressResponse{
     id: string,
+    active: boolean,
     user: UserResponse,
     cep: string,
     city: string,

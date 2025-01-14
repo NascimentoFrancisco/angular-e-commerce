@@ -7,6 +7,7 @@ import { AddressResponse } from '../../../interfaces/responses/address/addressRe
 import { AuthService } from '../../../services/auth/auth.service';
 import { AddressService } from '../../../services/address/address.service';
 import { SpinnerPageInfoComponent } from "../../../shared/spinner-info/spinner-page-info.component";
+import { SnackbarService } from '../../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-home',
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit{
     private modalService: ModalService,
     private authService: AuthService,
     private addressService: AddressService,
+    private snackbarService: SnackbarService
   ){}
 
   ngOnInit(): void {
@@ -50,15 +52,29 @@ export class HomeComponent implements OnInit{
     }
   }
 
-  public handleDeleteAddress(){
+  public handleDeleteAddress(addresId: string){
     this.modalService.openModal(
       "<p>Tem certeza que deseja excluir este endereço?</p>",
-      () => this.deleteAddress("123456")
+      () => this.deleteAddress(addresId)
     )
   }
 
   private deleteAddress(address_id: string){
-    console.log(address_id);
+    this.addressService.disableAddress(address_id).subscribe({
+      next: (response) => {
+        if(response){
+          this.snackbarService.show(
+            "Endereço apagado com sucesso!", "success"
+          );
+          this.getAllAddressByUser();
+        }
+      },
+      error: (err) => {
+        this.snackbarService.show(
+          "Erro ao apagar endereço!", "error"
+        )
+      }
+    });
   }
 
   public navigateToCreateUpdate(addressID?: string){

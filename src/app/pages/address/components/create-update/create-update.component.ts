@@ -133,6 +133,7 @@ export class CreateUpdateComponent implements OnInit{
     this.addressForm.get('state')?.enable();
     let addresRequest = {
       cep: this.addressForm.value.cep,
+      active: true,
       city: this.addressForm.value.city,
       state: this.addressForm.value.state,
       district: this.addressForm.value.district,
@@ -168,6 +169,7 @@ export class CreateUpdateComponent implements OnInit{
     this.addressForm.get('state')?.enable();
     let addresRequest = {
       cep: this.addressForm.value.cep,
+      active: true,
       city: this.addressForm.value.city,
       state: this.addressForm.value.state,
       district: this.addressForm.value.district,
