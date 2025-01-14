@@ -5,6 +5,7 @@ import { AuthFormsComponent } from './pages/auth/auth-forms/auth-forms.component
 import { ProductDetailsComponent } from './pages/home/components/product-details/product-details.component';
 import { UserRoutes } from './pages/user/user.routes';
 import { PaymentRoutes } from './pages/payment/payment.routes';
+import { AddressRoutes } from './pages/address/address.routes';
 
 export const routes: Routes = [
     {
@@ -22,6 +23,10 @@ export const routes: Routes = [
     {
         path: "user",
         children: UserRoutes,
+    },
+    {
+        path: "address",
+        children: AddressRoutes,
     },
     {
         path: "payment",
