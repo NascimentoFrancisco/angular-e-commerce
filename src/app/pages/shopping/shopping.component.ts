@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { ShoppingResponse } from '../interfaces/responses/shopping/shoppingResponse';
-import { ProductsResponse } from '../interfaces/responses/products/productsResponse';
-import { AuthService } from '../services/auth/auth.service';
-import { AddressService } from '../services/address/address.service';
-import { ShoppingService } from '../services/shopping/shopping.service';
-import { AddressResponse } from '../interfaces/responses/address/addressResponse';
+import { ShoppingResponse } from '../../interfaces/responses/shopping/shoppingResponse';
+import { ProductsResponse } from '../../interfaces/responses/products/productsResponse';
+import { AuthService } from '../../services/auth/auth.service';
+import { AddressService } from '../../services/address/address.service';
+import { ShoppingService } from '../../services/shopping/shopping.service';
+import { AddressResponse } from '../../interfaces/responses/address/addressResponse';
 import { Router } from '@angular/router';
-import { HeaderNotAuthenticatedComponent } from "../shared/header-not-authenticated/header-not-authenticated.component";
-import { CurrencyBrPipe } from '../utils/pipes/currencybr/currency-br.pipe';
-import statesAndTaxesShiipping from '../interfaces/utils/statesTaxes';
-import { NotContentContainerComponent } from "../shared/not-content-container/not-content-container.component";
-import { SpinnerPageInfoComponent } from "../shared/spinner-info/spinner-page-info.component";
-import { ModalService } from '../services/modal/modal.service';
-import { SnackbarService } from '../services/snackbar/snackbar.service';
+import { HeaderNotAuthenticatedComponent } from "../../shared/header-not-authenticated/header-not-authenticated.component";
+import { CurrencyBrPipe } from '../../utils/pipes/currencybr/currency-br.pipe';
+import statesAndTaxesShiipping from '../../interfaces/utils/statesTaxes';
+import { NotContentContainerComponent } from "../../shared/not-content-container/not-content-container.component";
+import { SpinnerPageInfoComponent } from "../../shared/spinner-info/spinner-page-info.component";
+import { ModalService } from '../../services/modal/modal.service';
+import { SnackbarService } from '../../services/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-shopping',
@@ -126,6 +126,10 @@ export class ShoppingComponent implements OnInit{
         "isInShopping": true 
       }
     })
+  }
+
+  public navigateToHome(){
+    this.router.navigate(["/"]);
   }
 
   public handleFinishShopping(){

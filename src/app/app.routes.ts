@@ -6,7 +6,7 @@ import { ProductDetailsComponent } from './pages/home/components/product-details
 import { UserRoutes } from './pages/user/user.routes';
 import { PaymentRoutes } from './pages/payment/payment.routes';
 import { AddressRoutes } from './pages/address/address.routes';
-import { ShoppingComponent } from './shopping/shopping.component';
+import { ShoppingComponent } from './pages/shopping/shopping.component';
 
 export const routes: Routes = [
     {
