@@ -1,0 +1,28 @@
+<app-header-not-authenticated></app-header-not-authenticated>
+<main>
+    @if (shopping) {
+        <div class="container_product">
+            <div class="product_container">
+                <h4>{{ shopping.product.name| shorten: 35 }}</h4>
+                <div class="image_container">
+                    <img src="{{ shopping.product.image_url }}" alt="{{ shopping.product.name }}">
+                </div>
+            </div>
+
+            <div class="product_options">
+                <div class="product_shopping">
+                    <h4>{{ shopping.product.name }}</h4>
+                    <h4>Valor produto: {{ shopping.product.price | currencyBr }}</h4>
+                    <h4>Quantidade: {{ shopping.quantity_products }}</h4>
+                    <h4>Frete: {{ shopping.shipping_value| currencyBr }}</h4>
+                    <h4>Valor total: {{ shopping.value | currencyBr }}</h4>
+                </div>
+            </div>
+            <div class="divider"></div>
+            <div class="info_product">
+                <h4>Descrição:</h4>
+                <p>{{ shopping.product.description }}</p>
+            </div>
+        </div>
+    }
+</main>

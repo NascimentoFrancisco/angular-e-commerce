@@ -6,7 +6,7 @@ import { ProductDetailsComponent } from './pages/home/components/product-details
 import { UserRoutes } from './pages/user/user.routes';
 import { PaymentRoutes } from './pages/payment/payment.routes';
 import { AddressRoutes } from './pages/address/address.routes';
-import { ShoppingComponent } from './pages/shopping/shopping.component';
+import { shoppingRoutes } from './pages/shopping/shopping.routes';
 
 export const routes: Routes = [
     {
@@ -35,6 +35,6 @@ export const routes: Routes = [
     },
     {
         path: "shopping",
-        component: ShoppingComponent
+        children: shoppingRoutes
     }
 ];

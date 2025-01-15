@@ -73,7 +73,7 @@ export class ShoppingComponent implements OnInit{
     */
     if(stateByAddress){
       let valueShipping = 0;
-      let valueBase = this.product!.price * this.quantityProducts
+      let valueBase = Number(this.product!.price) * this.quantityProducts
       
       this.statesAndTaxeByShipping.forEach((state) => {
         if(state.state === stateByAddress){

@@ -6,7 +6,7 @@
             <h4>{{ shopping.product.name }}</h4>
                 <ul>
                     <li>Quantidade: {{ shopping.quantity_products }}</li>
-                    <li>Total: 89,90</li>
+                    <li>Total: {{ shopping.value | currencyBr }}</li>
                 </ul>
             @if (shopping.cancelled) {
                 <h4>Situação: <b [style]="{'color': '#fc0000'}">Cancelada</b></h4>    
@@ -27,20 +27,20 @@
         </div>
         <div class="shopping_actions">
             @if (shopping.cancelled) {
-                <button class="actions_button">Repetir compra</button>
-                <button class="actions_button">Ver detalhes</button>
+                <button class="actions_button" (click)="navigateToShopping()" >Repetir compra</button>
+                <button class="actions_button" (click)="navigateToDetailShopping()">Ver detalhes</button>
             } @else {
                 @if (shopping.payment_status && shopping.status) {
-                    <button class="actions_button">Repetir compra</button>
-                    <button class="actions_button">Ver detalhes</button>
+                    <button class="actions_button" (click)="navigateToShopping()" >Repetir compra</button>
+                    <button class="actions_button" (click)="navigateToDetailShopping()">Ver detalhes</button>
                     <button class="delete_shopping_cart" (click)="handleDeleteShoppingCart()">Cancelamento</button>
                 } @else if (!shopping.payment_status && shopping.status) {
                     <button class="finish_shopping_cart" (click)="navigateToPayment()">Pagamento</button>
                     <button class="delete_shopping_cart" (click)="handleDeleteShoppingCart()">Cancelamento</button>
-                    <button class="actions_button">Ver detalhes</button>
+                    <button class="actions_button" (click)="navigateToDetailShopping()">Ver detalhes</button>
                 } @else if (!shopping.status && shopping.payment_status) {
-                    <button class="actions_button">Repetir compra</button>
-                    <button class="actions_button">Ver detalhes</button>
+                    <button class="actions_button" (click)="navigateToShopping()" >Repetir compra</button>
+                    <button class="actions_button" (click)="navigateToDetailShopping()">Ver detalhes</button>
                 }
             }
         </div>
