@@ -1,0 +1,63 @@
+<app-header-not-authenticated></app-header-not-authenticated>
+
+<main>
+    @if (addressByUser.length > 0 && AddressRequests) {
+        <div class="container">
+            <div class="container_address">
+                <h4>Selecione o endereço para o envio</h4>
+                <div class="all_options">
+                    @for (address of addressByUser ; track $index) {
+                        <div class="option_address">
+                            <div class="option" (click)="selectAddress($index.toString())">
+                                <input id="{{ $index }}" type="radio" name="address" value="{{ $index }}" checked>
+                                <label for="option">
+                                    <div class="address_item">
+                                        <div class="info_address">
+                                            <div class="top_info">
+                                                <h4>{{ address.city }}, {{ address.state }}</h4>
+                                                <p>{{ address.street }}, Nº {{ address.number }}, {{ address.district }}</p>
+                                            </div>
+                                            <span>Complemento: {{ address.complement }}</span>
+                                            <span>CEP: {{ address.cep }}</span>
+                                            <span>Telefone: {{ address.phone_number }}</span>
+                                            
+                                            <div class="freight_value">
+                                                <span>Valor do Frete:</span>
+                                                <span>{{ calculateShipping(address.state) |  currencyBr}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="shopping_container">
+                <h4>Informações da compra</h4>
+                <div class="shopping_info">
+                    <span>{{ product?.name }}</span>
+                    <span>Unidades: {{ quantityProducts }}</span>
+                    <span>Valor: {{ product!.price * quantityProducts | currencyBr }}</span>
+                    <span>Frete: {{ calculateShipping() | currencyBr }}</span>
+                    <span>Valor total: {{  product!.price * quantityProducts + shippingValue | currencyBr }}</span>
+                </div>
+                <div class="shpping_actions">
+                    <button id="buy" (click)="handleFinishShopping()">Finalizar</button>
+                    <button id="cancel" (click)="navigateToHome()">Cancelar</button>
+                </div>
+            </div>
+
+        </div>
+    } @else if (addressByUser.length === 0 && AddressRequests) {
+        <app-not-content-container
+            [title]="'Ops! Você não tem nenhum endereço ainda.'"
+            [subtitle]="'Clique no botão de adiconar e cadastre seu primeiro endereço.'"
+        ></app-not-content-container>
+        <div class="add_address">
+            <button (click)="navigateToCreateAddress()">Adicionar</button>
+        </div>
+    } @else if (addressByUser.length === 0  && !AddressRequests) {
+        <app-spinner-page-info></app-spinner-page-info>
+    }
+</main>

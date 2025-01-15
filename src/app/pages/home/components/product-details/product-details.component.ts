@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HeaderComponent } from "../../../../shared/header/header.component";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsResponse } from '../../../../interfaces/responses/products/productsResponse';
 import { ProductsService } from '../../../../services/products/products.service';
 import { SpinnerPageInfoComponent } from "../../../../shared/spinner-info/spinner-page-info.component";
@@ -10,6 +10,7 @@ import { SnackbarService } from '../../../../services/snackbar/snackbar.service'
 import { ShoppingCartService } from '../../../../services/shopping_cart/shopping-cart.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShoppingCartResponse } from '../../../../interfaces/responses/shopping-cart/shoppingCartResponse';
+import { ShoppingRequest } from '../../../../interfaces/requests/shopping/shoppingRequest';
 
 @Component({
   selector: 'app-product-details',
@@ -37,6 +38,7 @@ export class ProductDetailsComponent implements OnInit{
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private authService: AuthService,
     private productsService: ProductsService,
     private snackbarService: SnackbarService,
@@ -76,7 +78,6 @@ export class ProductDetailsComponent implements OnInit{
   public getProductById(id: string){
     this.productsService.getProductById(id).subscribe({
       next: (response) => {
-        //console.log(response);
         if(response){
           this.product = response;
         }
@@ -181,4 +182,9 @@ export class ProductDetailsComponent implements OnInit{
     }
   }
 
+  public navigateToShopping(){
+    this.router.navigate(["shopping"], {
+      state: { "product" : this.product, "quantityProducts": this.quantityProducts }
+    });
+  }
 }

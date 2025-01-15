@@ -102,7 +102,7 @@ export class ItemListContentComponent implements OnInit{
     }
   }
 
-  /* Shippings */
+  /* Shoppings */
   public handleDeleteShoppingCart(){
     this.modalService.openModal(
       "<h2>Atenção!</h2><p>Você realmente deseja <b>cancelar</b> sua compra?</p>",
@@ -127,6 +127,18 @@ export class ItemListContentComponent implements OnInit{
   public navigateToPayment(){
     this.router.navigate(["payment"], {
       state: { shopping: this.shopping }
+    });
+  }
+
+  public navigateToShopping(){
+    this.router.navigate(["shopping"], {
+      state: {"product": this.shopping!.product, "quantityProducts": this.shopping!.quantity_products}
+    })
+  }
+
+  public navigateToDetailShopping(){
+    this.router.navigate(["shopping/detail"], {
+      state: {"shopping": this.shopping}
     });
   }
 
