@@ -12,8 +12,8 @@ export class ShoppingService {
 
   constructor(private http: HttpClient) { }
 
-  public createShopping(shopingRequest: ShoppingRequest){
-    this.http.post(`${environment.BASE_URL}/shopping/`, shopingRequest);
+  public createShopping(shopingRequest: ShoppingRequest): Observable<ShoppingResponse>{
+    return this.http.post<ShoppingResponse>(`${environment.BASE_URL}/shopping/`, shopingRequest);
   }
 
   public getShoppingsByUser(userId: string): Observable<ShoppingResponse[]>{

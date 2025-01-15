@@ -37,7 +37,8 @@ export class HomeComponent implements OnInit{
 
   public calculateValueShopping(): number{
     if(this.shopping){
-      return this.shopping.product.price * this.shopping.quantity_products
+      console.log(this.shopping.shipping_value);
+      return this.shopping.product.price * this.shopping.quantity_products + Number(this.shopping.shipping_value);
     }
     return 0;
   }

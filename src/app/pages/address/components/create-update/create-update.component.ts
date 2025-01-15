@@ -7,6 +7,7 @@ import { ModalService } from '../../../../services/modal/modal.service';
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
 import { Router } from '@angular/router';
 import { AddressResponse } from '../../../../interfaces/responses/address/addressResponse';
+import { ProductsService } from '../../../../services/products/products.service';
 
 @Component({
   selector: 'app-create-update',
@@ -24,6 +25,9 @@ export class CreateUpdateComponent implements OnInit{
   public addressByCep?: AddressByCep;
   public addressForm: FormGroup;
   public cepValid = true;
+  public product?: ProductsService;
+  public isInShopping = false;
+  public quantityProducts = 0;
 
   constructor(
     private fb: FormBuilder,
@@ -60,6 +64,13 @@ export class CreateUpdateComponent implements OnInit{
       const state = window.history.state;
       this.addressForEdit = state.address;
       this.updateAddress = state.edit;
+
+      if(state.isInShopping){
+        this.isInShopping = true;
+        this.product = state.product;
+        this.quantityProducts = state.quantityProducts;
+      }
+
     }
     if(this.addressForEdit){
       this.addressForm.patchValue({
@@ -88,7 +99,6 @@ export class CreateUpdateComponent implements OnInit{
     let cep = this.addressForm.value.cep;
     if(this.addressForm.value.cep){
       this.addressService.getCep(cep).subscribe({
-        // 64980000 83406420 01451000
         next: (response) => {
           if(response.localidade){
             this.addressByCep = response;
@@ -152,7 +162,16 @@ export class CreateUpdateComponent implements OnInit{
             "Endereço cadastrado com sucesso!", "success"
           );
           this.addressForm.reset();
-          this.router.navigate(["address"]);
+          if(this.isInShopping && this.product){
+            this.router.navigate(["shopping"],{
+              state: {
+                "product": this.product,
+                "quantityProducts": this.quantityProducts
+              }
+            });
+          } else {
+            this.router.navigate(["address"]);
+          }
         }
       },
       error: (err) => {

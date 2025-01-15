@@ -14,6 +14,7 @@
                     <h4>{{ shopping.product.name }}</h4>
                     <h4>Quantidade de produtos: {{ shopping.quantity_products }}</h4>
                     <h4>Valor unitário do produto: {{ shopping.product.price | currencyBr }}</h4>
+                    <h4>Valor do frete: {{ shopping.shipping_value | currencyBr }}</h4>
                     <h4>Valor da compra: {{ calculateValueShopping() | currencyBr }}</h4>
                 </div>
                 <div class="divider"></div>
