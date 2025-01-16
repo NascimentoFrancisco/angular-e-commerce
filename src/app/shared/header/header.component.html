@@ -15,8 +15,8 @@
         </div>
 
         <div class="header-input">
-            <input type="text" placeholder="Pesquise por produtos o por categorias">
-            <a href="#">
+            <input type="text" [(ngModel)]="searchFormData.serach" placeholder="Pesquise por produtos o por categorias">
+            <a (click)="searchByValue()">
                 <img src="../../../assets/search.png" alt="search">
             </a>
         </div>
