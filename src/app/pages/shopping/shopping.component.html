@@ -4,7 +4,10 @@
     @if (addressByUser.length > 0 && AddressRequests) {
         <div class="container">
             <div class="container_address">
-                <h4>Selecione o endereço para o envio</h4>
+                <div class="header_container">
+                    <h4>Selecione o endereço para o envio</h4>
+                    <a (click)="navigateToCreateAddress()">Adiconar endereço</a>
+                </div>
                 <div class="all_options">
                     @for (address of addressByUser ; track $index) {
                         <div class="option_address">

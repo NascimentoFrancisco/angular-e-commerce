@@ -1,8 +1,9 @@
-<app-header></app-header>
+<app-header (searchValue)="updateSearchValue($event)"></app-header>
 
 @if (categories) {
     <app-list-products
         [categories]="categories"
+        [searchValue]="searchValue"
     ></app-list-products>
 } @else {
     <app-spinner-page-info></app-spinner-page-info>

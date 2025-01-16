@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { HeaderComponent } from "../../../shared/header/header.component";
 import { FooterComponent } from "../../../shared/footer/footer.component";
 import { CategoriesService } from '../../../services/categories/categories.service';
@@ -11,12 +11,18 @@ import { SpinnerPageInfoComponent } from "../../../shared/spinner-info/spinner-p
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [HeaderComponent, FooterComponent, ListProductsComponent, SpinnerPageInfoComponent],
+  imports: [
+    HeaderComponent, 
+    FooterComponent, 
+    ListProductsComponent, 
+    SpinnerPageInfoComponent
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit{
   public categories?: CategoryResponse[];
+  public searchValue?: string;
 
   constructor(
     private categoriesService: CategoriesService,
@@ -25,6 +31,10 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     this.getAllCategories();
+  }
+
+  public updateSearchValue(value: string): void {
+    this.searchValue = value;
   }
 
   private getAllCategories(){

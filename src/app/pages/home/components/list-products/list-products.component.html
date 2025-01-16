@@ -1,4 +1,27 @@
 <main>
+    @if (productsBySearchValue) {
+        @for (product of productsBySearchValue; track $index) {
+            
+            <section class="section-promotion">
+                <div class="promotion-container">
+                    <h4>Resultados para: "{{ product.category }}"</h4>
+                    <div class="products-promotion">
+                        
+                        @for (product of product.producs; track $index) {
+                            <a (click)="navigateToDetail(product.id)">
+                                <div class="card-procuct-promotion">
+                                    <img src="{{ product.image_url }}" alt="Capacete">
+                                    <p>{{ product.name | shorten:40}}</p>
+                                    <span class="price">{{ product.price | currencyBr }}</span>
+                                </div>
+                            </a>
+                        }
+
+                    </div>
+                </div>
+            </section>
+        }
+    }
     @if (productsByCategories.length > 0) {
         @for (productsAndCategories of productsByCategories; track $index) {
             

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
 import { Router } from '@angular/router';
@@ -6,20 +6,25 @@ import { UserResponse } from '../../interfaces/responses/user/userResponse';
 import { CommonModule } from '@angular/common';
 import { ShoppingCartService } from '../../services/shopping_cart/shopping-cart.service';
 import { ShoppingCartResponse } from '../../interfaces/responses/shopping-cart/shoppingCartResponse';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit{
   @ViewChild('menuMobile') menuMobile!: ElementRef<HTMLDivElement>;
   @ViewChild('cart_button') cart_button!: ElementRef<HTMLButtonElement>;
+  @Output() searchValue = new EventEmitter<string>();
   public isAuthenticated = false;
   public loggedInUser?: UserResponse;
   public allShoppingCartByUser: ShoppingCartResponse[] = [];
+  public searchFormData = {
+    serach: ""
+  }
   
   constructor(
     private authService: AuthService,
@@ -31,6 +36,12 @@ export class HeaderComponent implements OnInit{
   ngOnInit(): void {
     this.InitializesHeaderInformation();
     this.initializeCart();
+  }
+
+  public searchByValue(){
+    if(this.searchFormData.serach.trim() !== ""){
+      this.searchValue.emit(this.searchFormData.serach.trim());
+    }
   }
 
   public navigateToLogin(): void {
@@ -75,7 +86,7 @@ export class HeaderComponent implements OnInit{
     if (this.isAuthenticated) {
       const userId = this.authService.getInfoAuth('userIDKey');
       
-      // Carrega o estado inicial do carrinho
+      // Loads the initial state of the Shoppingcart
       this.shoppingCartService.getAllShopingCartUser(userId!).subscribe({
         next: (response) => {
           this.allShoppingCartByUser = response;
@@ -85,7 +96,7 @@ export class HeaderComponent implements OnInit{
         },
       });
 
-      // Inscreve-se para atualizações reativas do carrinho
+      // Sign up for reactive cart updates
       this.shoppingCartService.getCartUpdates().subscribe({
         next: (updatedCart) => {
           this.allShoppingCartByUser = updatedCart;
