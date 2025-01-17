@@ -7,6 +7,7 @@ import { UserRoutes } from './pages/user/user.routes';
 import { PaymentRoutes } from './pages/payment/payment.routes';
 import { AddressRoutes } from './pages/address/address.routes';
 import { shoppingRoutes } from './pages/shopping/shopping.routes';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
     {
@@ -24,17 +25,21 @@ export const routes: Routes = [
     {
         path: "user",
         children: UserRoutes,
+        canActivate: [authGuard],
     },
     {
         path: "address",
         children: AddressRoutes,
+        canActivate: [authGuard],
     },
     {
         path: "payment",
         children: PaymentRoutes,
+        canActivate: [authGuard],
     },
     {
         path: "shopping",
-        children: shoppingRoutes
+        children: shoppingRoutes,
+        canActivate: [authGuard]
     }
 ];

@@ -1,4 +1,6 @@
 .default_button{
+    display: flex;
+    gap: 2px;
     padding: 12px;
     border-radius: 4px;
     background-color: #FF8800;
@@ -7,4 +9,8 @@
     font-weight: 800;
     cursor: pointer;
     transition: background-color 0.3s ease;
+}
+
+.default_button:hover{
+    background-color: #c06600;
 }

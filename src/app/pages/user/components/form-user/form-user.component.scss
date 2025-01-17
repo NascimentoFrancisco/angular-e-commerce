@@ -70,6 +70,14 @@ main{
     gap: 15px;
 }
 
+.error_passwords{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    color: red;
+    font-weight: 800;
+}
+
 .submit_button{
     margin-top: 20px;
     margin-bottom: 20px;

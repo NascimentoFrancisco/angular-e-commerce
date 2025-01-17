@@ -52,20 +52,22 @@ export class ProductDetailsComponent implements OnInit{
       if(this.idProduct){
         this.getProductById(this.idProduct);
         let userId = this.authService.getInfoAuth("userIDKey");
-        this.shoppingCartService.getAllShopingCartUser(userId!).subscribe({
-          next: (response) => {
-            if(response){
-              response.forEach((shopp) => {
-                if(shopp.product.id === this.idProduct){
-                  this.shoppingCartByUser = shopp;
-                }
-              });
+        if (userId){
+          this.shoppingCartService.getAllShopingCartUser(userId!).subscribe({
+            next: (response) => {
+              if(response){
+                response.forEach((shopp) => {
+                  if(shopp.product.id === this.idProduct){
+                    this.shoppingCartByUser = shopp;
+                  }
+                });
+              }
+            },
+            error: (err) => {
+              console.log(err);
             }
-          },
-          error: (err) => {
-            console.log(err);
-          }
-        })
+          });
+        }
       }
       
     });
@@ -143,6 +145,11 @@ export class ProductDetailsComponent implements OnInit{
           }
         }     
       })
+    } else {
+      this.snackbarService.show(
+        "Faça login para poder adicionar o o produto em seu carrinho!", "info"
+      )
+      this.router.navigate(["login"]);
     }
   }
 

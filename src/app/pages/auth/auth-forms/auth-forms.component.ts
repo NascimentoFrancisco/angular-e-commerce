@@ -88,7 +88,7 @@ export class AuthFormsComponent implements OnInit{
           this.buttonStatus = true;
           this.cleanLoginFormData();
           this.router.navigate(["/"]);
-          this.handleSnackBarMesssage("Seja bem vindo!", "success");
+          this.handleSnackBarMesssage("Seja bem vindo(a)!", "success");
           this.authService.setAllInfoAuth(response.access, response.refresh, response.user_id);
         }
       },

@@ -55,7 +55,13 @@
                     placeholder="Ex: 1212@#ED"
                     [(ngModel)]="formData.password1"
                     name="password1"
+                    (ngModelChange)="validatePasswords()"
                 ></app-default-input-text>
+                @if (differentPasswords) {
+                    <div class="error_passwords">
+                        <small>As senhas não coincidem.</small>
+                    </div>
+                }
                 <app-default-input-text
                     label="Repita sua senha"
                     type="password"
@@ -63,6 +69,7 @@
                     placeholder="Digite su asenha novamente"
                     [(ngModel)]="formData.password2"
                     name="password2"
+                    (ngModelChange)="validatePasswords()"
                 ></app-default-input-text>
             </div>
         }
@@ -71,6 +78,7 @@
             <app-default-button
                 [title]="'Salvar dados'"
                 [type]="'submit'"
+                [clicked]="clicked"
                 (action)="handleClick()"
             ></app-default-button>
         </div>
