@@ -1,4 +1,7 @@
 
 <button class="default_button" (click)="onClick()">
     {{ title }}
+    @if (clicked) {
+        <app-circular-progress [backgroundColor]="'#ffff'"></app-circular-progress>
+    }
 </button>

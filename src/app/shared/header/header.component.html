@@ -2,8 +2,13 @@
     <div class="menu-mobile-logo">
         <img src="../../../assets/logo_new.png" alt="logo">
     </div>
-    <a href="#">Crie sua conta</a>
-    <a href="#">Entre</a>
+    @if (isAuthenticated) {
+        <a (click)="navigateToUserPage()">Minha conta</a>
+        <a (click)="logout()">Sair</a>
+    }@else {
+        <a (click)="navigateToCreateUser()">Crie sua conta</a>
+        <a (click)="navigateToLogin()">Entre</a>
+    }
     <a id="closedMenu" (click)="closeMenu()">X</a>
 </div>
 <header>
@@ -26,7 +31,7 @@
                 <a (click)="navigateToUserPage()">Minha conta</a>
                 <a (click)="logout()">Sair</a>
             }@else {
-                <a href="#">Crie sua conta</a>
+                <a (click)="navigateToCreateUser()">Crie sua conta</a>
                 <a (click)="navigateToLogin()">Entre</a>
             }
             @if (allShoppingCartByUser.length > 0) {

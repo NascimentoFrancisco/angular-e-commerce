@@ -12,7 +12,7 @@ export class ShoppingCartService {
 
   constructor(private http: HttpClient) {}
 
-  public createCatShopping(data: { product_id: string, status: boolean}){
+  public createCatShopping(data: { product: string, status: boolean}){
     return this.http.post(`${environment.BASE_URL}/shopping-cart/`, data);
   }
 

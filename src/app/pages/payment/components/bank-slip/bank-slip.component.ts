@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { HeaderNotAuthenticatedComponent } from "../../../../shared/header-not-authenticated/header-not-authenticated.component";
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
@@ -7,6 +7,7 @@ import { PaymentService } from '../../../../services/payment/payment.service';
 import { PaymentRequest } from '../../../../interfaces/requests/payment/paymentRequest';
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-bank-slip',
@@ -25,6 +26,7 @@ export class BankSlipComponent implements OnInit{
 
   public pdfSrc: SafeResourceUrl | null = null; 
   public pdfBlob?: Blob;
+  destroyedRef = inject(DestroyRef);
   
   constructor(
     private fb: FormBuilder,
@@ -97,7 +99,9 @@ export class BankSlipComponent implements OnInit{
 
     //Now I'll just create a payment in the backend API and display any PDF.
     if (this.paymentRequest){
-      this.paymentService.createPayment(this.paymentRequest).subscribe({
+      this.paymentService.createPayment(this.paymentRequest).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: (response) => {
           if(response){
             this.snackbarService.show(

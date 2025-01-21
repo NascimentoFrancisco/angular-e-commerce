@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { PaymentRequest } from '../../../../interfaces/requests/payment/paymentRequest';
 import { PaymentService } from '../../../../services/payment/payment.service';
@@ -9,6 +9,7 @@ import { CurrencyBrPipe } from '../../../../utils/pipes/currencybr/currency-br.p
 import { CircularProgressComponent } from "../../../../shared/circular-progress/circular-progress.component";
 import { ModalService } from '../../../../services/modal/modal.service';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-credit-cart',
@@ -32,6 +33,7 @@ export class CreditCartComponent implements OnInit{
   public years: number[] = [];
   public clicked = false;
   private paymentRequest?: PaymentRequest;
+  destroyedRef = inject(DestroyRef);
 
   constructor(
     private fb: FormBuilder,
@@ -168,7 +170,9 @@ export class CreditCartComponent implements OnInit{
         total_value: Number(this.possibleDivisions[this.indexpossibleDivision].valueTotal.toFixed(2))
       }
       this.clicked = true;
-      this.paymentService.createPayment(this.paymentRequest).subscribe({
+      this.paymentService.createPayment(this.paymentRequest).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: (response) => {
           if(response){
             this.snackbarService.show(

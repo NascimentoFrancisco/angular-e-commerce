@@ -95,6 +95,10 @@ main{
     cursor: pointer;
 }
 
+#add_cart:hover {
+    background-color: #cc7613;
+}
+
 #remove_cart{
     height: 40px;
     width: 60%;
@@ -104,6 +108,10 @@ main{
     font-size: 18px;
     border-radius: 4px;
     cursor: pointer;
+}
+
+#remove_cart:hover{
+    background-color: #b60303;
 }
 
 #buy_now{
@@ -116,6 +124,11 @@ main{
     border-radius: 4px;
     cursor: pointer;
 }
+
+#buy_now:hover {
+    background-color: #008607;
+}
+
 .divider{
     display: block;
     width: 100%;

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { ItemListContentComponent } from "../item-list-content/item-list-content.component";
 import { UserResponse } from '../../../../interfaces/responses/user/userResponse';
 import { ShoppingService } from '../../../../services/shopping/shopping.service';
@@ -7,6 +7,7 @@ import { NotContentContainerComponent } from "../../../../shared/not-content-con
 import { SpinnerPageInfoComponent } from "../../../../shared/spinner-info/spinner-page-info.component";
 import { ShoppingCartService } from '../../../../services/shopping_cart/shopping-cart.service';
 import { ShoppingCartResponse } from '../../../../interfaces/responses/shopping-cart/shoppingCartResponse';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-content-listing',
@@ -24,6 +25,7 @@ export class ContentListingComponent implements OnInit{
   public shoppingsByUser: ShoppingResponse[] = [];
   public shoppingCartByUser: ShoppingCartResponse[] = [];
   public readingDone = false;
+  destroyedRef = inject(DestroyRef);
 
   constructor(
     private shoppingService: ShoppingService,
@@ -40,7 +42,9 @@ export class ContentListingComponent implements OnInit{
   }
 
   public getAllshoppingByUser(){
-    this.shoppingService.getShoppingsByUser(this.user.id).subscribe({
+    this.shoppingService.getShoppingsByUser(this.user.id).pipe(
+      takeUntilDestroyed(this.destroyedRef)
+    ).subscribe({
       next: (response) => {
         if(response){
           this.shoppingsByUser = response;
@@ -55,7 +59,9 @@ export class ContentListingComponent implements OnInit{
   }
 
   public getAllShoppingCartsByUser(){
-    this.shoppingCartService.getAllShopingCartUser(this.user.id).subscribe({
+    this.shoppingCartService.getAllShopingCartUser(this.user.id).pipe(
+      takeUntilDestroyed(this.destroyedRef)
+    ).subscribe({
       next: (cartItems) =>{
         this.shoppingCartService.emitCartUpdate(cartItems);
         this.shoppingCartByUser = cartItems;

@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, DestroyRef, ElementRef, EventEmitter, inject, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service';
 import { UserService } from '../../services/user/user.service';
 import { Router } from '@angular/router';
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { ShoppingCartService } from '../../services/shopping_cart/shopping-cart.service';
 import { ShoppingCartResponse } from '../../interfaces/responses/shopping-cart/shoppingCartResponse';
 import { FormsModule } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop'
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit{
   public searchFormData = {
     serach: ""
   }
+  destroyedRef = inject(DestroyRef);
   
   constructor(
     private authService: AuthService,
@@ -48,6 +50,10 @@ export class HeaderComponent implements OnInit{
     this.router.navigate(["/login"])
   }
   
+  public navigateToCreateUser(): void {
+    this.router.navigate(["user/create-edit"]);
+  }
+
   private InitializesHeaderInformation(): void {
     if(this.authService.getInfoAuth("accessToken")){
       this.isAuthenticated = true;
@@ -55,7 +61,9 @@ export class HeaderComponent implements OnInit{
 
     if(this.isAuthenticated){
       let userId = this.authService.getInfoAuth("userIDKey");
-      this.userService.getUser(userId!).subscribe({
+      this.userService.getUser(userId!).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: (response) => {
           if(response){
             this.loggedInUser = response;
@@ -71,7 +79,9 @@ export class HeaderComponent implements OnInit{
   public getAllShoppingCartByUser(){
     if(this.isAuthenticated){
       let userId = this.authService.getInfoAuth("userIDKey")
-      this.shoppingCartService.getAllShopingCartUser(userId!).subscribe({
+      this.shoppingCartService.getAllShopingCartUser(userId!).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: (response) => {
           this.allShoppingCartByUser = response;
         },
@@ -87,7 +97,9 @@ export class HeaderComponent implements OnInit{
       const userId = this.authService.getInfoAuth('userIDKey');
       
       // Loads the initial state of the Shoppingcart
-      this.shoppingCartService.getAllShopingCartUser(userId!).subscribe({
+      this.shoppingCartService.getAllShopingCartUser(userId!).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: (response) => {
           this.allShoppingCartByUser = response;
         },
@@ -97,7 +109,9 @@ export class HeaderComponent implements OnInit{
       });
 
       // Sign up for reactive cart updates
-      this.shoppingCartService.getCartUpdates().subscribe({
+      this.shoppingCartService.getCartUpdates().pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: (updatedCart) => {
           this.allShoppingCartByUser = updatedCart;
         },

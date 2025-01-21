@@ -10,7 +10,7 @@ export const UserRoutes: Routes = [
         component: HomeUserComponent
     },
     {
-        path: "edit",
+        path: "create-edit",
         component: CreateUpdateUserComponent
     },
     {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { ShoppingResponse } from '../../interfaces/responses/shopping/shoppingResponse';
 import { ProductsResponse } from '../../interfaces/responses/products/productsResponse';
 import { AuthService } from '../../services/auth/auth.service';
@@ -13,6 +13,7 @@ import { NotContentContainerComponent } from "../../shared/not-content-container
 import { SpinnerPageInfoComponent } from "../../shared/spinner-info/spinner-page-info.component";
 import { ModalService } from '../../services/modal/modal.service';
 import { SnackbarService } from '../../services/snackbar/snackbar.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-shopping',
@@ -35,6 +36,7 @@ export class ShoppingComponent implements OnInit{
   public statesAndTaxeByShipping = statesAndTaxesShiipping;
   public AddressRequests = false;
   private indexAddress = 0;
+  destroyedRef = inject(DestroyRef);
   
 
   constructor(
@@ -103,7 +105,9 @@ export class ShoppingComponent implements OnInit{
   private getAllAddresByUser(){
     let userID = this.authService.getInfoAuth("userIDKey");
     if(userID){
-      this.addressService.getAllAddressByIdUser(userID).subscribe({
+      this.addressService.getAllAddressByIdUser(userID).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: (response) => {
           if(response) {
             this.addressByUser = response;
@@ -154,7 +158,9 @@ export class ShoppingComponent implements OnInit{
         address: this.addressByUser[this.indexAddress].id 
       }
 
-      this.shoppingService.createShopping(shoppingRequest).subscribe({
+      this.shoppingService.createShopping(shoppingRequest).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: (response) => {
           if(response){
             console.log(response);

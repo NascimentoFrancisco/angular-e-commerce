@@ -1,13 +1,14 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { CategoryResponse } from '../../../../interfaces/responses/categories/categoryResponse'
 import { ProductsResponse } from '../../../../interfaces/responses/products/productsResponse';
 import { ProductsService } from '../../../../services/products/products.service';
-import { CommonModule, CurrencyPipe } from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { ShortenPipe } from '../../../../utils/pipes/shorten/shorten.pipe';
 import { CurrencyBrPipe } from "../../../../utils/pipes/currencybr/currency-br.pipe";
 import { SpinnerPageInfoComponent } from "../../../../shared/spinner-info/spinner-page-info.component";
 import { Router } from '@angular/router';
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-list-products',
@@ -29,6 +30,7 @@ export class ListProductsComponent implements OnInit, OnChanges{
   @Input() name?: string;
   public productsByCategories: Array<{ category: string, producs: Array<ProductsResponse> }> = [];
   public productsBySearchValue: Array<{ category: string, producs: Array<ProductsResponse> }> = [];
+  destroyedRef = inject(DestroyRef);
 
   constructor(
     private proudctsService: ProductsService,
@@ -53,7 +55,9 @@ export class ListProductsComponent implements OnInit, OnChanges{
   
   public getProductByCategory(categorySlug: string, categoryTitle:string){
     if(this.categories){
-      this.proudctsService.getProduct(categorySlug).subscribe({
+      this.proudctsService.getProduct(categorySlug).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: (response) => {
           if(response && response.length > 0){
             this.productsByCategories.push(
@@ -73,9 +77,10 @@ export class ListProductsComponent implements OnInit, OnChanges{
 
   private getProductsBySearchValue(){
     if(this.searchValue){
-      this.proudctsService.getProduct(this.searchValue).subscribe({
+      this.proudctsService.getProduct(this.searchValue).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: (response) => {
-          console.log(response);
           if(response && response.length > 0){
             this.productsBySearchValue.push(
               {
