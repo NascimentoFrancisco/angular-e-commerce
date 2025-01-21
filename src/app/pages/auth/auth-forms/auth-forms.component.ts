@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { HeaderNotAuthenticatedComponent } from "../../../shared/header-not-authenticated/header-not-authenticated.component";
 import { DefaultInputTextComponent } from "../../../shared/default-input-text/default-input-text.component";
 import { DefaultButtonComponent } from "../../../shared/default-button/default-button.component";
@@ -9,6 +9,7 @@ import { SnackbarService } from '../../../services/snackbar/snackbar.service';
 import { ChangePasswordRequest } from '../../../interfaces/requests/auth/changePasswordRequest';
 import { Router } from '@angular/router';
 import { ModalService } from '../../../services/modal/modal.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-auth-forms',
@@ -27,6 +28,7 @@ export class AuthFormsComponent implements OnInit{
 
   @Input() loginOrChangePassword: boolean = false;// If false, make login
   public buttonStatus = true;
+  destroyedRef = inject(DestroyRef);
   
 
   loginFormData = {
@@ -81,7 +83,9 @@ export class AuthFormsComponent implements OnInit{
       password: this.loginFormData.password
     }
     this.buttonStatus = false;
-    this.authService.login(loginRequest).subscribe({
+    this.authService.login(loginRequest).pipe(
+      takeUntilDestroyed(this.destroyedRef)
+    ).subscribe({
       next: (response) => {
         if(response){
           console.log(response);

@@ -1,9 +1,10 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, Input, OnInit } from '@angular/core';
 import { FormUserComponent } from "../form-user/form-user.component";
 import { UserUpdateRequest } from '../../../../interfaces/requests/user/userUpdateRequest';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { UserService } from '../../../../services/user/user.service';
 import { SpinnerPageInfoComponent } from "../../../../shared/spinner-info/spinner-page-info.component";
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-create-update-user',
@@ -22,6 +23,7 @@ export class CreateUpdateUserComponent implements OnInit {
     email: "",
     username: ""
   }
+  destroyedRef = inject(DestroyRef);
 
   constructor(
     private authService: AuthService,
@@ -40,7 +42,9 @@ export class CreateUpdateUserComponent implements OnInit {
 
   private getUserById(){
     let userId = this.authService.getInfoAuth("userIDKey")
-    this.userService.getUser(userId!).subscribe({
+    this.userService.getUser(userId!).pipe(
+      takeUntilDestroyed(this.destroyedRef)
+    ).subscribe({
       next: (response) => {
         this.userEdit.name = response.name
         this.userEdit.email = response.email

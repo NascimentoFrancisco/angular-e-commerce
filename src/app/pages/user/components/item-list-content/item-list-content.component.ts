@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, DestroyRef, EventEmitter, inject, Input, OnInit, Output } from '@angular/core';
 import { ShoppingResponse } from '../../../../interfaces/responses/shopping/shoppingResponse';
 import { ShoppingCartResponse } from '../../../../interfaces/responses/shopping-cart/shoppingCartResponse';
 import { SnackbarService } from '../../../../services/snackbar/snackbar.service';
@@ -8,6 +8,7 @@ import { AuthService } from '../../../../services/auth/auth.service';
 import { ShoppingCartService } from '../../../../services/shopping_cart/shopping-cart.service';
 import { ShoppingService } from '../../../../services/shopping/shopping.service';
 import { Router } from '@angular/router';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-item-list-content',
@@ -27,6 +28,8 @@ export class ItemListContentComponent implements OnInit{
   public quantityProducts = 1;
   public totalValue = 0;
   public buttonClicked = false;
+  destroyedRef = inject(DestroyRef);
+  
 
   constructor(
     private router: Router,
@@ -79,7 +82,9 @@ export class ItemListContentComponent implements OnInit{
   private deleteShoppingCart(){
     if(this.shoppingCart){
       this.buttonClicked = true;
-      this.shoppingCartService.removeCatShopping(this.shoppingCart.id).subscribe({
+      this.shoppingCartService.removeCatShopping(this.shoppingCart.id).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: () => {
           this.buttonClicked = false;
           this.shoppingCartDeleted.emit();
@@ -111,7 +116,9 @@ export class ItemListContentComponent implements OnInit{
   }
 
   private cancelShopping(){
-    this.shoppingService.cancelShopping(this.shopping!.id).subscribe({
+    this.shoppingService.cancelShopping(this.shopping!.id).pipe(
+      takeUntilDestroyed(this.destroyedRef)
+    ).subscribe({
       next: (response) => {
         if(response){
           this.shoppingUpdateList.emit();

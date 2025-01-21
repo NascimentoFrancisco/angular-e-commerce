@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from "../../../../shared/header/header.component";
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProductsResponse } from '../../../../interfaces/responses/products/productsResponse';
@@ -10,7 +10,7 @@ import { SnackbarService } from '../../../../services/snackbar/snackbar.service'
 import { ShoppingCartService } from '../../../../services/shopping_cart/shopping-cart.service';
 import { AuthService } from '../../../../services/auth/auth.service';
 import { ShoppingCartResponse } from '../../../../interfaces/responses/shopping-cart/shoppingCartResponse';
-import { ShoppingRequest } from '../../../../interfaces/requests/shopping/shoppingRequest';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-product-details',
@@ -35,6 +35,7 @@ export class ProductDetailsComponent implements OnInit{
   public isAuthenticated = false;
   public allShoppingCartByUser: ShoppingCartResponse[] = [];
   public shoppingCartByUser?: ShoppingCartResponse | null;
+  destroyedRef = inject(DestroyRef);
 
   constructor(
     private route: ActivatedRoute,
@@ -53,7 +54,9 @@ export class ProductDetailsComponent implements OnInit{
         this.getProductById(this.idProduct);
         let userId = this.authService.getInfoAuth("userIDKey");
         if (userId){
-          this.shoppingCartService.getAllShopingCartUser(userId!).subscribe({
+          this.shoppingCartService.getAllShopingCartUser(userId!).pipe(
+            takeUntilDestroyed(this.destroyedRef)
+          ).subscribe({
             next: (response) => {
               if(response){
                 response.forEach((shopp) => {
@@ -120,10 +123,14 @@ export class ProductDetailsComponent implements OnInit{
   public addCartShopping(){
     if(this.isAuthenticated){
       let userId = this.authService.getInfoAuth("userIDKey");
-      let data = { product_id: this.idProduct!, status: true };
-      this.shoppingCartService.createCatShopping(data).subscribe({
+      let data = { product: this.idProduct!, status: true };
+      this.shoppingCartService.createCatShopping(data).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: () => {
-          this.shoppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
+          this.shoppingCartService.getAllShopingCartUser(userId!).pipe(
+            takeUntilDestroyed(this.destroyedRef)
+          ).subscribe((cartItems) => {
             this.shoppingCartService.emitCartUpdate(cartItems);
             cartItems.forEach((shopp) => {
               if(shopp.product.id === this.idProduct){
@@ -156,7 +163,9 @@ export class ProductDetailsComponent implements OnInit{
   public removeCartShopping(){
     let userId = this.authService.getInfoAuth("userIDKey");
     if(this.isAuthenticated && this.shoppingCartByUser){
-      this.shoppingCartService.removeCatShopping(this.shoppingCartByUser.id).subscribe({
+      this.shoppingCartService.removeCatShopping(this.shoppingCartByUser.id).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe({
         next: () => {
           this.shoppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
             this.shoppingCartService.emitCartUpdate(cartItems);
@@ -183,7 +192,9 @@ export class ProductDetailsComponent implements OnInit{
   public getAllShoppingCartsByUser(){
     if(this.isAuthenticated){
       let userId = this.authService.getInfoAuth("userIDKey");
-      this.shoppingCartService.getAllShopingCartUser(userId!).subscribe((cartItems) => {
+      this.shoppingCartService.getAllShopingCartUser(userId!).pipe(
+        takeUntilDestroyed(this.destroyedRef)
+      ).subscribe((cartItems) => {
         this.shoppingCartService.emitCartUpdate(cartItems);
       })
     }
